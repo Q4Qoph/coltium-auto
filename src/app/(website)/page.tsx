@@ -33,14 +33,8 @@ export default function Home() {
 
     return (
         <div className="bg-black text-white min-h-screen">
-            {/* <Head>
-        <title>KARZONE | Luxury & Exotic Car Rentals</title>
-        <meta name="description" content="Rent luxury and exotic cars with Karzone's premium collection" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head> */}
-
             {/* Hero Section */}
-            <section className="relative h-screen flex items-center">
+            <section className="relative h-[60vh] sm:h-screen flex items-center">
                 <div className="absolute inset-0 overflow-hidden">
                     <Image
                         src="/1.png"
@@ -62,11 +56,11 @@ export default function Home() {
                         variants={fadeInUp}
                         className="max-w-2xl"
                     >
-                        <h1 className="text-xl md:text-7xl font-bold mb-4">
+                        <h1 className="text-4xl md:text-7xl font-bold mb-4">
                             Wrap Your Ride. <br />
                             Own the Look.
                         </h1>
-                        <div className="flex gap-4 mt-8">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <button className="bg-[#eb2c09] transition-colors px-8 py-3 rounded-sm flex items-center gap-2">
                                 Get a Wrap
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -85,7 +79,7 @@ export default function Home() {
             </section>
 
             {/* About Section */}
-            <section className="py-24 border-b border-gray-800">
+            <section className="py-10 sm:py-24 border-b border-gray-800">
                 <div className="container mx-auto px-6">
                     <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">ABOUT US</h2>
                     <motion.div
