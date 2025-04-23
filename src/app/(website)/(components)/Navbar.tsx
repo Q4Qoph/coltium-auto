@@ -45,9 +45,9 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Home</Link>
-          <Link href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
-          <Link href="/media" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link>
-          <Link href="/faqs" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
+          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
+          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link>
+          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
           <button className="bg-[#cd0d0f] transition-colors  px-6 py-2 rounded-sm text-sm">
             CONTACT US
           </button>
@@ -72,11 +72,10 @@ const Navbar = () => {
           className="md:hidden bg-black bg-opacity-95"
         >
           <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
-            <Link href="/reservations" className="text-gray-300 hover:text-white transition-colors py-2">Reservations</Link>
-            <Link href="/vehicles" className="text-gray-300 hover:text-white transition-colors py-2">Vehicles</Link>
-            <Link href="/locations" className="text-gray-300 hover:text-white transition-colors py-2">Locations</Link>
-            <Link href="/car-sales" className="text-gray-300 hover:text-white transition-colors py-2">Car Sales</Link>
-            <Link href="/promotions" className="text-gray-300 hover:text-white transition-colors py-2">Promotions</Link>
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Home</Link>
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Media</Link>
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
             <button className="bg-[#eb2c09] hover:bg-red-600 transition-colors text-black px-6 py-2 rounded-sm text-sm self-start">
               CONTACT US
             </button>
