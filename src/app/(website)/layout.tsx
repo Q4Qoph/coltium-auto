@@ -1,5 +1,5 @@
 import Footer from "./(components)/Footer";
-import Header from "./(components)/Header";
+import Navbar from "./(components)/Navbar";
 
 const WebsiteLayout = ({
     children,
@@ -8,7 +8,7 @@ const WebsiteLayout = ({
 }>) => {
     return (
         <div>
-            <Header />
+            <Navbar />
             {children}
             <Footer />
         </div>
