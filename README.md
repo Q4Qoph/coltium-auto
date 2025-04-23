@@ -1,5 +1,4 @@
 ## Wrap & Drive UI
-### Getting Started
 
 First, run the development server:
 
