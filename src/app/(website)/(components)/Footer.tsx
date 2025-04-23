@@ -40,12 +40,12 @@ const Footer = () => {
           <div className="mb-8 md:mb-0">
             <h3 className="text-gray-400 mb-2">Address</h3>
             <p className="text-lg mb-12">
-              Nairobi
+            Nothern bypass, opposite quickmart thome, Gachie, Nairobi Area, Kenya, 00200
             </p>
 
             <h3 className="text-gray-400 mb-2">Contact Us</h3>
             <p className="text-lg mb-1">+254 792 391 610</p>
-            <p className="text-lg">wrapandride@gmail.com</p>
+            <p className="text-lg">wrapndrivelimited@gmail.com</p>
           </div>
 
           {/* Back to top button */}
