@@ -3,7 +3,7 @@ import { Mail, Phone, Clock, MapPin } from 'lucide-react';
 
 export default function ContactPage() {
   return (
-    <section className="py-[10rem] bg-black text-white">
+    <section className="container mx-auto px-6 py-[10rem] bg-black text-white">
       <div className="container mx-auto px-6">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row">
