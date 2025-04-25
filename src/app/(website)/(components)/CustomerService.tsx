@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-const CustomerService = () => {
+const CustomerService = ({goToWhatsapp}: any) => {
   const fadeInRight = {
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -55,7 +55,7 @@ const CustomerService = () => {
             <p className="text-gray-400 mb-8">
               From design consultation to post-install care, we provide unmatched customer service for every wrap project. Whether it’s your first wrap or your fifth, our team ensures a smooth, stress-free experience. Clear timelines. Professional advice. Flawless results.
             </p>
-            <button className="bg-[#eb2c09]  transition-colors  px-6 py-3 rounded-sm self-start flex items-center gap-2">
+            <button onClick={goToWhatsapp} className="bg-[#eb2c09]  transition-colors  px-6 py-3 rounded-sm self-start flex items-center gap-2">
               Book a consult
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />

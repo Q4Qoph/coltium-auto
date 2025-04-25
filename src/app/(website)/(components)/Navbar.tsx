@@ -48,9 +48,9 @@ const Navbar = () => {
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link>
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
-          <button className="bg-[#cd0d0f] transition-colors  px-6 py-2 rounded-sm text-sm">
+          <Link href="/contact" className="bg-[#cd0d0f] transition-colors  px-6 py-2 rounded-sm text-sm">
             CONTACT US
-          </button>
+          </Link>
         </div>
 
         <button
@@ -76,9 +76,9 @@ const Navbar = () => {
             <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
             <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Media</Link>
             <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
-            <button className="bg-[#eb2c09] hover:bg-red-600 transition-colors text-black px-6 py-2 rounded-sm text-sm self-start">
+            <Link href="/contact" className="bg-[#eb2c09] hover:bg-red-600 transition-colors text-black px-6 py-2 rounded-sm text-sm self-start">
               CONTACT US
-            </button>
+            </Link>
           </div>
         </motion.div>
       )}

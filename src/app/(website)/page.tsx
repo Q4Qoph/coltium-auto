@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CustomerService from './(components)/CustomerService';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
     const [scrollY, setScrollY] = useState(0);
+    const router = useRouter()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -27,6 +29,9 @@ export default function Home() {
             transition: { duration: 0.6 }
         }
     };
+    const goToWhatsapp = () => {
+        window.open('https://wa.me/message/DRBDDWMHOCREO1', '_blank');
+    }
 
     return (
         <div className="bg-black text-white min-h-screen">
@@ -58,7 +63,7 @@ export default function Home() {
                             Own the Look.
                         </h1>
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                            <button className="bg-[#eb2c09] transition-colors px-8 py-3 rounded-sm flex items-center gap-2">
+                            <button onClick={goToWhatsapp} className="bg-[#eb2c09] transition-colors px-8 py-3 rounded-sm flex items-center gap-2">
                                 Get a Wrap
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -104,7 +109,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <CustomerService />
+            <CustomerService goToWhatsapp={goToWhatsapp}/>
         </div>
     );
 }
