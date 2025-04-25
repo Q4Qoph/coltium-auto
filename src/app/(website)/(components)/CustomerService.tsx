@@ -38,7 +38,7 @@ const CustomerService = () => {
               alt="Superior Customer Service"
               layout="fill"
               objectFit="cover"
-            className="trans -scale-x-100"
+              className="trans -scale-x-100"
             />
           </motion.div>
 
