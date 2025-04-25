@@ -53,17 +53,17 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 text-white min-h-screen">
+    <div className="text-white min-h-screen ">
       {/* Hero Section */}
-      <section className="pt-32">
-        <div className="container mx-auto">
+      <section className="pt-32 bg-gradient-to-b from-zinc-900 to-black">
+        <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeIn}
             className="max-w-3xl"
           >
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">Premium Services for Exceptional Vehicles</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Premium Services for Exceptional Vehicles</h1>
             <p className="text-gray-400 text-xl mb-12">This isn't just car care, it's an experience.</p>
           </motion.div>
         </div>
@@ -71,7 +71,7 @@ const ServicesPage = () => {
 
       {/* Main Services */}
       <section className="py-16 bg-zinc-950">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -129,7 +129,7 @@ const ServicesPage = () => {
 
       {/* Process Section */}
       <section className="py-20">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -179,7 +179,7 @@ const ServicesPage = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-zinc-950">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
             whileInView="visible"
