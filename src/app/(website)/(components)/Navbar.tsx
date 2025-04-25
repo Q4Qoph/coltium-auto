@@ -46,8 +46,8 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Home</Link>
           <Link href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
-          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link>
-          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
+          {/* <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link> */}
+          <Link href="/faqs" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
           <Link href="/contact" className="bg-[#cd0d0f] transition-colors  px-6 py-2 rounded-sm text-sm">
             CONTACT US
           </Link>
@@ -73,9 +73,9 @@ const Navbar = () => {
         >
           <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
             <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Home</Link>
-            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
-            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Media</Link>
-            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
+            <Link href="/services" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
+            {/* <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Media</Link> */}
+            <Link href="/faqs" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
             <Link href="/contact" className="bg-[#eb2c09] hover:bg-red-600 transition-colors text-black px-6 py-2 rounded-sm text-sm self-start">
               CONTACT US
             </Link>
