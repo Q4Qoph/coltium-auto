@@ -22,7 +22,6 @@ const WebsiteLayout = ({
         className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg transition-all duration-300 flex items-center space-x-2"
       >
         <MessageCircle size={20} className="text-white" />
-        <span className="hidden sm:inline text-sm font-medium">Chat with us</span>
       </Link>
     </div>
   );
