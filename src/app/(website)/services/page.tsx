@@ -195,7 +195,7 @@ const ServicesPage = () => {
             </div>
             <div>
               <Link href="tel:+254792391610" className="inline-flex items-center bg-[#cd0d0f] rounded-full px-8 py-3 font-medium hover:bg-opacity-90 transition duration-300">
-                Call Us Right Now
+                Call Us
               </Link>
             </div>
           </motion.div>
