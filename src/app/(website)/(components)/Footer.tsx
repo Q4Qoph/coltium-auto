@@ -12,7 +12,6 @@ const Footer = () => {
         {/* Top part with logo and tagline */}
         <div className="flex flex-col md:flex-row justify-between items-start mb-16">
           <div className="mb-8 md:mb-0">
-            {/* Replace with your logo */}
             <Image
               src="/logo.png" // Change to your actual logo path
               alt="Wrap and Drive Logo"

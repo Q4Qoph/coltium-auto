@@ -1,15 +1,14 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import CarShowcase from './(components)/CarShowcase';
-import BrandsGrid from './(components)/BrandsGrid';
 import CustomerService from './(components)/CustomerService';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
     const [scrollY, setScrollY] = useState(0);
+    const router = useRouter()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -30,6 +29,9 @@ export default function Home() {
             transition: { duration: 0.6 }
         }
     };
+    const goToWhatsapp = () => {
+        window.open('https://wa.me/message/DRBDDWMHOCREO1', '_blank');
+    }
 
     return (
         <div className="bg-black text-white min-h-screen">
@@ -46,7 +48,7 @@ export default function Home() {
                     />
                     {/* Mirror overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 mix-blend-overlay pointer-events-none"></div>
-                    </div>
+                </div>
 
 
                 <div className="container mx-auto px-6 relative z-10">
@@ -61,7 +63,7 @@ export default function Home() {
                             Own the Look.
                         </h1>
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                            <button className="bg-[#eb2c09] transition-colors px-8 py-3 rounded-sm flex items-center gap-2">
+                            <button onClick={goToWhatsapp} className="bg-[#eb2c09] transition-colors px-8 py-3 rounded-sm flex items-center gap-2">
                                 Get a Wrap
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                     <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -79,26 +81,35 @@ export default function Home() {
             </section>
 
             {/* About Section */}
-            <section className="py-10 sm:py-24 border-b border-gray-800">
+            <section className="py-16 bg-black text-white">
                 <div className="container mx-auto px-6">
-                    <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">ABOUT US</h2>
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={fadeInUp}
-                    >
-                        <h3 className="text-3xl md:text-4xl font-bold mb-6 max-w-3xl">
-                            From sleek matte finishes to bold custom designs, our expert vehicle wraps turn ordinary cars into showstoppers                        </h3>
-                        <p className="text-gray-400 max-w-2xl">
-                            We specialize in premium car wraps that combine aesthetics, protection, and performance. Whether you're looking for a full color change, a satin finish, or branded graphics for your business fleet, our team delivers precision work using industry-leading materials. Every project is handled with care and attention to detail, ensuring your vehicle stands out on the road and stays protected from the elements.                        </p>
-                    </motion.div>
+                    <div className="flex flex-col md:flex-row">
+                        <div className="md:w-1/5">
+                            <div className="flex items-center mb-8">
+                                <div className="w-10 h-px bg-[#eb2c09] mr-3"></div>
+                                <span className="text-sm uppercase tracking-wider">ABOUT US</span>
+                            </div>
+                        </div>
+
+                        <div className="md:w-4/5">
+                            <div className="mb-8">
+                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                                    From sleek matte finishes to bold custom designs, our expert vehicle wraps <span className='text-gray-400 opacity-80'>turn ordinary cars into showstoppers</span>
+                                </h2>
+                            </div>
+
+                            <div className="flex justify-end gap-6  pt-8">
+                                <p className="w-1/2 flex items-center border-t border-gray-400  mt-3">
+                                </p>
+                                <p className="w-1/2 text-gray-400 text-sm md:text-base">
+                                    We specialize in premium car wraps that combine aesthetics, protection, and performance. Whether you're looking for a full color change, a satin finish, or branded graphics for your business fleet, our team delivers precision work using industry-leading materials. Every project is handled with care and attention to detail, ensuring your vehicle stands out on the road and stays protected from the elements.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
-            {/* Car Showcase */}
-            {/* <CarShowcase /> */}
-            {/* Customer Service */}
-            <CustomerService />
+            <CustomerService goToWhatsapp={goToWhatsapp}/>
         </div>
     );
 }
