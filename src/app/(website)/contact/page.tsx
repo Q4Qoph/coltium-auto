@@ -26,7 +26,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Information Grid */}
-        <div className=" ml-[20%] grid grid-cols-1 md:grid-cols-2  gap-12 mb-10 ">
+        <div className="pl-6 ml-[20%] grid grid-cols-1 md:grid-cols-2  gap-12 mb-10 ">
           {/* Email */}
           <div className="">
             <div className="flex items-start">
