@@ -267,7 +267,7 @@ const FaqPage = () => {
                 href="tel:+254792391610"
                 className="inline-flex items-center justify-center bg-[#cd0d0f] rounded-lg px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300"
               >
-                Call: +254 792 391 610
+                Call Us
               </a>
               <a
                 href="mailto:wrapndrivelimited@gmail.com"
