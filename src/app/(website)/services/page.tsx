@@ -53,7 +53,7 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="text-white min-h-screen ">
+    <div className="bg-black text-white min-h-screen ">
       {/* Hero Section */}
       <section className="pt-32 bg-gradient-to-b from-zinc-900 to-black">
         <div className="container mx-auto px-6">

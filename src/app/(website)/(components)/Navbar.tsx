@@ -48,7 +48,7 @@ const Navbar = () => {
           <Link href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
           {/* <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link> */}
           <Link href="/faqs" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
-          <Link href="/contact" className="bg-[#cd0d0f] transition-colors  px-6 py-2 rounded-sm text-sm">
+          <Link href="/contact" className="bg-[#cd0d0f] text-white transition-colors  px-6 py-2 rounded-sm text-sm">
             CONTACT US
           </Link>
         </div>
