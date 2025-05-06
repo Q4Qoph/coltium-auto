@@ -130,14 +130,14 @@ const FaqPage = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-zinc-900 to-black">
         <div className="container mx-auto text-center">
-          <motion.h1
+          <motion.h2
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-5xl md:text-6xl font-bold mb-8"
           >
             Frequently Asked Questions
-          </motion.h1>
+          </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

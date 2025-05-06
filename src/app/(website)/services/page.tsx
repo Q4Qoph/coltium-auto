@@ -63,7 +63,7 @@ const ServicesPage = () => {
             variants={fadeIn}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Premium Services for Exceptional Vehicles</h1>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Premium Services for Exceptional Vehicles</h2>
             <p className="text-gray-400 text-xl mb-12">This isn't just car care, it's an experience.</p>
           </motion.div>
         </div>
