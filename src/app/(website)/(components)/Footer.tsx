@@ -64,7 +64,7 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="flex justify-end mb-16">
           <div className="flex space-x-4">
-            <Link href="https://instagram.com" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+            <Link href="https://www.instagram.com/wrap_n_drive?igsh=MTdoZXV2ZmZobTg0Mg==" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
               <Instagram size={20} />
             </Link>
             <Link href="https://twitter.com" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
