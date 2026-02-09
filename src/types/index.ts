@@ -1,0 +1,121 @@
+/**
+ * Coltium-Auto – TypeScript interfaces
+ * Independent mobile vehicle diagnostic oversight platform.
+ */
+
+export type Role = "user" | "technician" | "admin";
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: Role;
+  phone?: string;
+  createdAt: string;
+}
+
+export interface SubscriptionPlan {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  priceMonthly: number;
+  priceYearly?: number;
+  features: string[];
+  inspectionLimit?: number; // null = unlimited
+}
+
+export interface Subscription {
+  id: string;
+  userId: string;
+  planId: string;
+  plan?: SubscriptionPlan;
+  status: "active" | "cancelled" | "expired" | "trialing";
+  currentPeriodEnd: string;
+  createdAt: string;
+}
+
+export type VehicleMake = string;
+export type VehicleModel = string;
+
+export interface Vehicle {
+  id: string;
+  userId: string;
+  make: VehicleMake;
+  model: VehicleModel;
+  year: number;
+  vin?: string;
+  registrationNumber?: string;
+  mileage?: number;
+  mileageUnit?: "km" | "mi";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type InspectionStatus = "pending" | "assigned" | "in_progress" | "completed" | "cancelled";
+
+export interface Inspection {
+  id: string;
+  userId: string;
+  vehicleId: string;
+  vehicle?: Vehicle;
+  technicianId?: string;
+  technician?: User;
+  status: InspectionStatus;
+  requestedAt: string;
+  scheduledAt?: string;
+  startedAt?: string;
+  completedAt?: string;
+  reportId?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DiagnosticReport {
+  id: string;
+  inspectionId: string;
+  inspection?: Inspection;
+  summary?: string;
+  severityRanking: "critical" | "monitor" | "informational";
+  findings: ReportFinding[];
+  recommendations: string[];
+  fileUrl?: string; // PDF
+  uploadedAt: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ReportFinding {
+  id: string;
+  code?: string;
+  description: string;
+  severity: "critical" | "monitor" | "informational";
+  system?: string;
+}
+
+// API request/response shapes
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface SignupRequest {
+  email: string;
+  password: string;
+  name: string;
+  role?: Role;
+  phone?: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  token: string;
+  expiresAt: string;
+}
+
+export interface ApiError {
+  message: string;
+  code?: string;
+  status?: number;
+}

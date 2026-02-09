@@ -1,14 +1,15 @@
-// components/Navbar.js
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useOptionalAuth } from "@/lib/auth-context";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const auth = useOptionalAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +35,7 @@ const Navbar = () => {
           <Link href="/" className="flex items-center">
             <Image
               src="/logo.png"
-              alt="Wrap and Drive Logo"
+              alt="Coltium-Auto"
               width={140}
               height={40}
               priority
@@ -45,12 +46,23 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center space-x-8">
           <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Home</Link>
+          <Link href="/about" className="text-sm text-gray-300 hover:text-white transition-colors">About</Link>
           <Link href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
-          {/* <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Media</Link> */}
+          <Link href="/pricing" className="text-sm text-gray-300 hover:text-white transition-colors">Pricing</Link>
           <Link href="/faqs" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
-          <Link href="/contact" className="bg-[#cd0d0f] text-white transition-colors  px-6 py-2 rounded-sm text-sm">
-            CONTACT US
-          </Link>
+          <Link href="/contact" className="text-sm text-gray-300 hover:text-white transition-colors">Contact</Link>
+          {auth?.user ? (
+            <Link href={auth.user.role === "admin" ? "/admin" : auth.user.role === "technician" ? "/technician" : "/dashboard"} className="bg-zinc-700 text-white hover:bg-zinc-600 transition-colors px-4 py-2 rounded-sm text-sm">
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link href="/login" className="text-sm text-gray-300 hover:text-white transition-colors">Login</Link>
+              <Link href="/signup" className="bg-[var(--primary)] text-white transition-colors px-6 py-2 rounded-sm text-sm">
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
 
         <button
@@ -73,12 +85,23 @@ const Navbar = () => {
         >
           <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
             <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Home</Link>
+            <Link href="/about" className="text-gray-300 hover:text-white transition-colors py-2">About</Link>
             <Link href="/services" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
-            {/* <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Media</Link> */}
+            <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors py-2">Pricing</Link>
             <Link href="/faqs" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
-            <Link href="/contact" className="bg-[#eb2c09] hover:bg-red-600 transition-colors text-black px-6 py-2 rounded-sm text-sm self-start">
-              CONTACT US
-            </Link>
+            <Link href="/contact" className="text-gray-300 hover:text-white transition-colors py-2">Contact</Link>
+            {auth?.user ? (
+              <Link href={auth.user.role === "admin" ? "/admin" : auth.user.role === "technician" ? "/technician" : "/dashboard"} className="bg-zinc-700 text-white px-6 py-2 rounded-sm text-sm self-start">
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link href="/login" className="text-gray-300 hover:text-white transition-colors py-2">Login</Link>
+                <Link href="/signup" className="bg-[var(--primary)] hover:bg-[var(--primary-hover)] text-white px-6 py-2 rounded-sm text-sm self-start">
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </motion.div>
       )}

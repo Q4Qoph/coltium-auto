@@ -5,4 +5,4 @@ Allow: /services
 Allow: /faqs
 Allow: /contact
 
-Sitemap: https://www.wrapanddrive.com/sitemap.xml
+Sitemap: https://www.coltium-auto.com/sitemap.xml

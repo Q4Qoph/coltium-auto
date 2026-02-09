@@ -57,7 +57,7 @@ const CarShowcase = () => {
             <p className="text-gray-400 max-w-md">
               See how we turn ordinary cars into rolling art with premium wraps.
             </p>
-            <button className="bg-[#eb2c09] transition-colors  px-6 py-2 rounded-sm text-sm">
+            <button className="bg-[var(--primary)] transition-colors  px-6 py-2 rounded-sm text-sm">
               See all cars
             </button>
           </div>
@@ -71,7 +71,7 @@ const CarShowcase = () => {
                 key={car.id}
                 onClick={() => setSelectedCar(index)}
                 className={`flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${selectedCar === index
-                  ? 'border-[#eb2c09] bg-opacity-20'
+                  ? 'border-[var(--primary)] bg-opacity-20'
                   : 'border-gray-700 hover:border-gray-500'
                   }`}
               >
@@ -142,7 +142,7 @@ const CarShowcase = () => {
                 </div>
               </div>
 
-              <button className="mt-8 md:mt-0 bg-[#eb2c09] transition-colorspx-6 py-2 rounded-sm text-sm flex items-center gap-2">
+              <button className="mt-8 md:mt-0 bg-[var(--primary)] transition-colorspx-6 py-2 rounded-sm text-sm flex items-center gap-2">
                 Book a Wrap
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />

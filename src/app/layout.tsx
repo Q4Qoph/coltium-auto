@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "@/lib/auth-context";
+import { QueryProvider } from "@/lib/query-client";
 
 
 export const metadata: Metadata = {
-  title: "Wrap and Drive | Premium Car Wraps in Kenya",
-  description: "Where automotive transformation meets top tier craftmanship",
-  keywords: ["Wrap in Kenya", "Best wraps", "Car wrap services", "Car details", "Vehicle customization", "Wrap and drive", "Wrap", "Wraps", "wrapanddrive"],
+  title: "Coltium-Auto | Independent Mobile Vehicle Diagnostic & Technical Oversight",
+  description: "Independent, professional vehicle diagnostic oversight — so you understand the true root cause before anyone starts replacing parts. We do not repair vehicles or sell parts.",
+  keywords: ["vehicle diagnostics", "independent diagnostic", "mobile diagnostics", "fault codes", "ECU diagnostics", "second opinion garage", "pre-purchase inspection", "fleet diagnostics", "Coltium-Auto", "vehicle health check"],
   openGraph: {
-    title: "Wrap and Drive | Premium Car Wraps in Kenya",
-    description: "Transform your ride with expert vehicle wrapping and detailing services from Kenya’s top customizers.",
-    url: "https://www.wrapanddrive.com",
-    siteName: "Wrap and Drive",
+    title: "Coltium-Auto | Independent Mobile Vehicle Diagnostic & Technical Oversight",
+    description: "Professional, high-accuracy vehicle diagnosis and technical oversight. We diagnose correctly, explain clearly, and guide you toward informed decisions — before money is spent on repairs.",
+    url: "https://www.coltium-auto.com",
+    siteName: "Coltium-Auto",
     images: [
       {
         url: "/logo.png",
@@ -23,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wrap and Drive | Premium Car Wraps in Kenya",
-    description: "Get your vehicle wrapped and styled by Kenya’s leading auto customization shop.",
+    title: "Coltium-Auto | Independent Mobile Vehicle Diagnostic & Technical Oversight",
+    description: "Independent vehicle diagnostic oversight. We provide technical facts only — no repair incentives, no parts sales.",
     images: ["/logo.png"],
   },
 };
@@ -36,10 +38,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        {children}
+      <body className="antialiased min-h-screen text-white" style={{ backgroundColor: "var(--background)" }}>
+        <QueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

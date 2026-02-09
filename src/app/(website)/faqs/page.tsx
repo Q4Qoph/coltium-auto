@@ -2,102 +2,102 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Search, Car, Shield } from 'lucide-react';
+import { ChevronDown, Search, Shield, Users } from 'lucide-react';
 
 const FaqPage = () => {
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
-  // FAQ Data organized by categories
+  // FAQ Data organised by categories (Coltium-Auto)
   const faqData = {
-    carWrapping: [
+    basics: [
       {
-        id: 'wrap1',
-        question: 'What is car wrapping?',
-        answer: "Car wrapping is the process of covering your vehicle's original paintwork with a vinyl film. This provides a completely different look while protecting the original paint underneath. Wraps come in various colors, finishes, and designs, allowing for customization that would be difficult or impossible to achieve with regular paint."
+        id: 'basic1',
+        question: 'What is Coltium-Auto?',
+        answer:
+          'Coltium-Auto is an independent, mobile vehicle diagnostic and technical oversight service. We operate like a medical diagnostic practice, but for vehicles. We focus solely on diagnosis, explanation, and guidance — not on selling or performing repairs.'
       },
       {
-        id: 'wrap2',
-        question: 'How long does it take to wrap a car?',
-        answer: 'The duration depends on the complexity of the wrap and the size of the vehicle. A basic color change wrap typically takes 3-5 days for a standard vehicle. More complex designs or larger vehicles may require additional time. We always ensure that each step is done meticulously for the best results.'
+        id: 'basic2',
+        question: 'Do you repair vehicles or sell parts?',
+        answer:
+          'No. We do not repair vehicles, do not sell parts, and are not a garage. This is intentional. By separating diagnosis from repair, we remove financial incentives that can bias recommendations, so you receive neutral, professional technical insight.'
       },
       {
-        id: 'wrap3',
-        question: 'Can I wrap my car if it has scratches or damages?',
-        answer: 'While minor imperfections might not be noticeable under a wrap, significant scratches, dents, or rust can affect the final appearance and longevity of the wrap. We recommend addressing any substantial paint or body issues before applying a wrap for the best results and to prevent potential issues down the line.'
+        id: 'basic3',
+        question: 'Who do you work for?',
+        answer:
+          'We work for vehicle owners and organisations only — not for garages, insurers, or warranty providers. Our responsibility is to provide accurate technical facts and clear guidance so that you can make informed decisions with any provider you choose.'
       },
       {
-        id: 'wrap4',
-        question: 'Will a car wrap protect my vehicle\'s paint?',
-        answer: 'Yes, vinyl wraps provide a protective layer that shields your original paint from minor scratches, UV damage, and small debris. However, they don\'t offer the same level of protection as dedicated paint protection films (PPF), which are designed specifically for maximum protection rather than aesthetics.'
+        id: 'basic4',
+        question: 'What kind of vehicles do you diagnose?',
+        answer:
+          'We focus on modern vehicles with electronic control units (ECUs): passenger cars, SUVs, light commercial vehicles, and similar platforms. If you are unsure whether your vehicle is a good fit, contact us and we will advise before booking.'
       },
       {
-        id: 'wrap5',
-        question: 'Do I need to do anything to maintain my car wrap?',
-        answer: 'Regular maintenance includes gentle hand washing with pH-neutral soap, avoiding high-pressure washes close to edges and seams, and keeping the vehicle clean from contaminants like tree sap or bird droppings that could damage the vinyl. We provide detailed care instructions with every wrap service.'
-      },
-      {
-        id: 'wrap6',
-        question: 'Is car wrapping legal in Kenya?',
-        answer: 'Yes, car wrapping is legal in Kenya. However, significant color changes may need to be reported to relevant authorities and updated in your vehicle documentation. We can advise on the specific requirements based on your wrap design and vehicle type.'
-      },
-      {
-        id: 'wrap7',
-        question: 'Can I remove the car wrap later?',
-        answer: 'Yes, vinyl wraps are designed to be removable without damaging the original paint when installed and removed properly. The removal process should be done by professionals to ensure no damage occurs, especially for wraps that have been on for several years.'
-      },
-      {
-        id: 'wrap8',
-        question: 'How long does a car wrap last?',
-        answer: 'With proper care and maintenance, a high-quality wrap can last 5-7 years. Factors affecting durability include the quality of vinyl used, installation expertise, exposure to harsh weather conditions, and how well the wrap is maintained.'
+        id: 'basic5',
+        question: 'What is “independent vehicle diagnostic oversight”?',
+        answer:
+          'It is a structured, professional process where we perform comprehensive diagnostics, interpret fault codes and live data, identify likely root causes, rank issues by severity, and recommend what should and should not be done next — all without any repair interest.'
       }
     ],
-    paintProtection: [
+    individuals: [
       {
-        id: 'ppf1',
-        question: 'What is paint protection film (PPF)?',
-        answer: 'Paint Protection Film (PPF) is a thermoplastic urethane film applied to painted surfaces of a new or used vehicle to protect from stone chips, bug damage, and minor abrasions. Premium PPF products also offer self-healing properties, meaning light scratches disappear with heat application.'
+        id: 'ind1',
+        question: 'When should an individual vehicle owner contact Coltium-Auto?',
+        answer:
+          'Contact us when warning lights appear, the vehicle behaves abnormally, multiple garages give conflicting advice, or before you approve expensive repairs. We are also useful for preventive health checks and pre-purchase inspections.'
       },
       {
-        id: 'ppf2',
-        question: 'How long does it take to install paint protection film?',
-        answer: 'Installation time varies based on coverage. Partial installations (front bumper, hood, mirrors) typically take 1-2 days, while full-vehicle PPF application can take 3-5 days. We prioritize precision over speed to ensure perfect application without bubbles or imperfections.'
+        id: 'ind2',
+        question: 'How does a typical on-demand diagnostic assessment work?',
+        answer:
+          'You request the service, we schedule an on-site visit, then perform a multi-ECU diagnostic scan and live data evaluation. We identify and prioritise faults, develop a root-cause hypothesis, and give you clear written and verbal recommendations before any repair work is authorised.'
       },
       {
-        id: 'ppf3',
-        question: 'Is paint protection film the same as ceramic coating?',
-        answer: 'No, they serve different purposes. PPF is a physical urethane film that protects against physical impacts and scratches. Ceramic coating is a liquid polymer that chemically bonds with the vehicle\'s paint, providing hydrophobic properties and protection against UV damage and chemical stains. They can be used together for maximum protection.'
+        id: 'ind3',
+        question: 'Can you give a second opinion on a garage quote?',
+        answer:
+          'Yes. We can independently assess the vehicle and compare findings with an existing garage quote or repair recommendation. We validate or challenge the proposed work, highlight possible misdiagnosis or over-repair, and provide technical justification you can take back to the provider.'
       },
       {
-        id: 'ppf4',
-        question: 'How do I maintain my paint protection film?',
-        answer: 'Maintain PPF by washing with pH-neutral soap, avoiding waxes with petroleum distillates, and not washing the vehicle for 7 days after installation. The film requires minimal special care and can be treated much like your vehicle\'s paint, though we recommend avoiding automatic car washes with brushes.'
+        id: 'ind4',
+        question: 'Do you decide which garage I should use?',
+        answer:
+          'No. We do not direct you to specific garages or take commissions. Our role is to arm you with accurate diagnostics and clear priorities so you can choose any garage, insurer, or provider with confidence.'
+      }
+    ],
+    organisations: [
+      {
+        id: 'org1',
+        question: 'How does Coltium-Auto support fleets and organisations?',
+        answer:
+          'For fleets and organisations, we provide routine diagnostic health checks, early fault detection across vehicles, repair priority guidance, and downtime prevention support. We do not execute maintenance — we provide technical oversight so your existing providers can act more effectively.'
       },
       {
-        id: 'ppf5',
-        question: 'Will paint protection film change the appearance of my car?',
-        answer: 'High-quality PPF is virtually invisible once installed. Modern films are designed to be optically clear with no distortion. Some premium PPF options can even enhance gloss levels or add special finishes like matte or satin effects if desired.'
+        id: 'org2',
+        question: 'What is a Fleet Diagnostic Retainer?',
+        answer:
+          'A Fleet Diagnostic Retainer is an ongoing agreement that gives your organisation structured access to Coltium-Auto for scheduled fleet-wide checks, on-call diagnostic support, and prioritised response. It is designed to reduce unplanned downtime and uncontrolled maintenance spending.'
       },
       {
-        id: 'ppf6',
-        question: 'Can paint protection film be removed?',
-        answer: 'Yes, PPF can be removed without damaging the underlying paint when done correctly. Professional removal is recommended, especially for older films. Once removed, the protected paint underneath will typically look newer and better preserved than unprotected areas.'
+        id: 'org3',
+        question: 'Can you assist with insurance or warranty disputes?',
+        answer:
+          'Yes. We can provide independent technical assessments, failure-mode analysis, and fault origin classification (for example, manufacturing defect, normal wear, misuse, external damage, improper repair, or software fault). However, we do not decide claim outcomes or interpret policy wording.'
       },
       {
-        id: 'ppf7',
-        question: 'How long does paint protection film last?',
-        answer: 'Premium paint protection films typically last 7-10 years, depending on the product quality, installation expertise, environmental conditions, and maintenance. Some high-end films come with warranties up to 10 years against yellowing, cracking, or peeling.'
-      },
-      {
-        id: 'ppf8',
-        question: 'Why should I invest in paint protection film for my car?',
-        answer: 'PPF preserves your vehicle\'s appearance and value by preventing damage that would otherwise require expensive repainting. It\'s an especially worthwhile investment for luxury vehicles, leased vehicles (to avoid return penalties), or any car you want to keep looking new for years to come.'
+        id: 'org4',
+        question: 'Do you replace the role of a garage or workshop?',
+        answer:
+          'No. We complement, not replace, garages and workshops. They remain responsible for repair execution. We provide the diagnostic clarity and technical oversight that helps ensure the right work is done for the right reasons.'
       }
     ]
   };
 
   // Combine all FAQs for "All" tab
-  const allFaqs = [...faqData.carWrapping, ...faqData.paintProtection];
+  const allFaqs = [...faqData.basics, ...faqData.individuals, ...faqData.organisations];
 
   // Toggle FAQ item expansion
   const toggleItem = (id: number) => {
@@ -112,8 +112,9 @@ const FaqPage = () => {
     let faqs: any = [];
 
     if (activeTab === 'all') faqs = allFaqs;
-    if (activeTab === 'wrapping') faqs = faqData.carWrapping;
-    if (activeTab === 'protection') faqs = faqData.paintProtection;
+    if (activeTab === 'basics') faqs = faqData.basics;
+    if (activeTab === 'individuals') faqs = faqData.individuals;
+    if (activeTab === 'organisations') faqs = faqData.organisations;
 
     if (searchTerm.trim() === '') return faqs;
 
@@ -144,7 +145,7 @@ const FaqPage = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-gray-400 text-xl max-w-2xl mx-auto mb-12"
           >
-            Everything you need to know about our premium vehicle transformation services
+            Everything you need to know about Coltium-Auto&apos;s independent vehicle diagnostic and technical oversight services.
           </motion.p>
 
           {/* Search Bar */}
@@ -162,7 +163,7 @@ const FaqPage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search questions..."
-              className="block w-full pl-10 pr-4 py-4  border border-zinc-700 rounded-full focus:ring-[#cd0d0f] focus:border-[#cd0d0f] focus:outline-none text-white"
+              className="block w-full pl-10 pr-4 py-4  border border-zinc-700 rounded-full focus:ring-[var(--primary)] focus:border-[var(--primary)] focus:outline-none text-white"
             />
           </motion.div>
         </div>
@@ -174,14 +175,15 @@ const FaqPage = () => {
           <div className="flex flex-wrap justify-center mb-12 gap-4">
             {[
               { id: 'all', label: 'All Questions', icon: null },
-              { id: 'wrapping', label: 'Car Wrapping', icon: <Car size={18} /> },
-              { id: 'protection', label: 'Paint Protection', icon: <Shield size={18} /> }
+              { id: 'basics', label: 'Service Basics', icon: <Shield size={18} /> },
+              { id: 'individuals', label: 'Individuals', icon: null },
+              { id: 'organisations', label: 'Fleets & Organisations', icon: <Users size={18} /> }
             ].map((tab) => (
               <motion.button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center px-6 py-3 rounded-full text-sm font-medium transition-all ${activeTab === tab.id
-                    ? 'bg-[#cd0d0f] text-white'
+                    ? 'bg-[var(--primary)] text-white'
                     : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
                   }`}
                 whileHover={{ scale: 1.05 }}
@@ -211,7 +213,7 @@ const FaqPage = () => {
                   >
                     <span className="text-lg font-medium pr-8">{faq.question}</span>
                     <ChevronDown
-                      className={`transform transition-transform ${expandedItems[faq.id] ? 'rotate-180 text-[#cd0d0f]' : ''}`}
+                      className={`transform transition-transform ${expandedItems[faq.id] ? 'rotate-180 text-[var(--primary)]' : ''}`}
                       size={20}
                     />
                   </button>
@@ -238,7 +240,7 @@ const FaqPage = () => {
                 <p className="text-gray-400 text-lg">No questions found matching "{searchTerm}"</p>
                 <button
                   onClick={() => setSearchTerm('')}
-                  className="mt-4 text-[#cd0d0f] hover:underline"
+                  className="mt-4 text-[var(--primary)] hover:underline"
                 >
                   Clear search
                 </button>
@@ -265,12 +267,12 @@ const FaqPage = () => {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="tel:+254792391610"
-                className="inline-flex items-center justify-center bg-[#cd0d0f] rounded-lg px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300"
+                className="inline-flex items-center justify-center bg-[var(--primary)] rounded-lg px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300"
               >
                 Call Us
               </a>
               <a
-                href="mailto:wrapndrivelimited@gmail.com"
+                href="mailto:contact@coltium-auto.com"
                 className="inline-flex items-center justify-center border border-white rounded-lg px-6 py-3 font-medium hover:bg-white hover:text-black transition duration-300"
               >
                 Email Us

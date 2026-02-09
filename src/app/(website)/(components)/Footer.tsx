@@ -14,14 +14,14 @@ const Footer = () => {
           <div className="mb-8 md:mb-0">
             <Image
               src="/logo.png" // Change to your actual logo path
-              alt="Wrap and Drive Logo"
+              alt="Coltium-Auto"
               width={150}
               height={50}
               className="mb-4"
             />
 
             <p className="text-gray-400 max-w-sm">
-              Premium automotive wraps that turn heads. Bold finishes, sleek protection, and an unforgettable look—crafted just for you.
+              Independent mobile vehicle diagnostic and technical oversight. We diagnose correctly, explain clearly, and guide owners and organisations toward informed decisions — before money is spent on repairs.
             </p>
 
 
@@ -44,7 +44,7 @@ const Footer = () => {
 
             <h3 className="text-gray-400 mb-2">Contact Us</h3>
             <p className="text-lg mb-1">+254 792 391 610</p>
-            <p className="text-lg">wrapndrivelimited@gmail.com</p>
+            <p className="text-lg">contact@coltium-auto.com</p>
           </div>
 
           {/* Back to top button */}
@@ -64,7 +64,7 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="flex justify-end mb-16">
           <div className="flex space-x-4">
-            <Link href="https://www.instagram.com/wrap_n_drive?igsh=MTdoZXV2ZmZobTg0Mg==" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+            <Link href="https://www.instagram.com/coltium_auto" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
               <Instagram size={20} />
             </Link>
             <Link href="https://twitter.com" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
@@ -82,17 +82,16 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <div className="flex flex-wrap justify-between mb-8 border-b border-gray-800 pb-6">
-          <Link href="/wraps" className="text-lg hover:underline mb-4 md:mb-0">Car Wraps</Link>
-          <Link href="/gallery" className="text-lg hover:underline mb-4 md:mb-0">Gallery</Link>
-          <Link href="/pricing" className="text-lg hover:underline mb-4 md:mb-0">Pricing</Link>
-          <Link href="/faq" className="text-lg hover:underline mb-4 md:mb-0">FAQs</Link>
-
+          <Link href="/" className="text-lg hover:underline mb-4 md:mb-0">Home</Link>
+          <Link href="/services" className="text-lg hover:underline mb-4 md:mb-0">Services</Link>
+          <Link href="/faqs" className="text-lg hover:underline mb-4 md:mb-0">FAQs</Link>
+          <Link href="/contact" className="text-lg hover:underline mb-4 md:mb-0">Contact</Link>
         </div>
 
         {/* Bottom part with copyright and policy */}
         <div className="flex flex-col md:flex-row justify-between items-center">
           <Link href="/terms" className="text-lg hover:underline mb-4 md:mb-0">Terms & Conditions</Link>
-          <p className="text-gray-400">© 2025 Wrap and Ride, Inc. All Rights Reserved</p>
+          <p className="text-gray-400">© {new Date().getFullYear()} Coltium-Auto. All Rights Reserved.</p>
           <Link href="/cookies" className="text-lg hover:underline mt-4 md:mt-0">Cookies Policy</Link>
         </div>
       </div>

@@ -10,7 +10,7 @@ export default function ContactPage() {
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/5">
               <div className="flex items-center mb-8">
-                <div className="w-10 h-px bg-[#cd0d0f] mr-3"></div>
+                <div className="w-10 h-px bg-[var(--primary)] mr-3"></div>
                 <span className="text-sm uppercase tracking-wider">CONTACT</span>
               </div>
             </div>
@@ -18,7 +18,7 @@ export default function ContactPage() {
             <div className="md:w-4/5">
               <div className="mb-16">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  Connect with our <span className="text-gray-500">expert team to transform your vehicle and elevate your presence on the road.</span>
+                  Connect with our <span className="text-gray-500">independent diagnostic team to understand what your vehicle really needs.</span>
                 </h2>
               </div>
             </div>
@@ -33,7 +33,7 @@ export default function ContactPage() {
               <Mail className="mr-4" size={24} />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                <p className="text-gray-400">wrapndrivelimited@gmail.com</p>
+                <p className="text-gray-400">contact@coltium-auto.com</p>
               </div>
             </div>
           </div>

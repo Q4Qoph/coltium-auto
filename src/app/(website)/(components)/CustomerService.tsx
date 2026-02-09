@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-const CustomerService = ({goToWhatsapp}: any) => {
+const CustomerService = ({ goToWhatsapp }: any) => {
   const fadeInRight = {
     hidden: { opacity: 0, x: -50 },
     visible: {
@@ -35,7 +35,7 @@ const CustomerService = ({goToWhatsapp}: any) => {
           >
             <Image
               src="/support.jpg"
-              alt="Superior Customer Service"
+              alt="Independent vehicle diagnostic support"
               layout="fill"
               objectFit="cover"
               className="trans -scale-x-100"
@@ -49,14 +49,27 @@ const CustomerService = ({goToWhatsapp}: any) => {
             variants={fadeInLeft}
             className="flex flex-col justify-center"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8">
-              Premium<br />Wrap<br />Support
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Independent<br />Diagnostic<br />Oversight
             </h2>
-            <p className="text-gray-400 mb-8">
-              From design consultation to post-install care, we provide unmatched customer service for every wrap project. Whether it’s your first wrap or your fifth, our team ensures a smooth, stress-free experience. Clear timelines. Professional advice. Flawless results.
+            <p className="text-gray-400 mb-4">
+              We operate like a medical diagnostic practice — but for vehicles. Our job is to examine the
+              vehicle carefully, interpret the data professionally, and give you clear, neutral guidance.
             </p>
-            <button onClick={goToWhatsapp} className="bg-[#eb2c09]  transition-colors  px-6 py-3 rounded-sm self-start flex items-center gap-2">
-              Book a consult
+            <p className="text-gray-400 mb-6">
+              We do not repair vehicles, sell parts, or work for garages, insurers, or warranty providers.
+              That means our only incentive is technical accuracy and your long‑term interest.
+            </p>
+            <ul className="text-gray-300 text-sm space-y-2 mb-8">
+              <li>• On-site diagnostics using professional tooling and methods.</li>
+              <li>• Severity-ranked findings so you know what is urgent versus optional.</li>
+              <li>• Clear next-step recommendations you can share with any garage or provider.</li>
+            </ul>
+            <button
+              onClick={goToWhatsapp}
+              className="bg-[var(--primary)]  transition-colors  px-6 py-3 rounded-sm self-start flex items-center gap-2"
+            >
+              Book on-site diagnostics
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
