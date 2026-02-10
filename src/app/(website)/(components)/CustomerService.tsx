@@ -23,7 +23,7 @@ const CustomerService = ({ goToWhatsapp }: any) => {
   };
 
   return (
-    <section className="py-10 sm:py-24">
+    <section className="py-10 sm:py-24 bg-black text-white">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <motion.div
@@ -34,7 +34,7 @@ const CustomerService = ({ goToWhatsapp }: any) => {
             className="relative h-96 md:h-full"
           >
             <Image
-              src="/support.jpg"
+              src="/support.png"
               alt="Independent vehicle diagnostic support"
               layout="fill"
               objectFit="cover"

@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowUp, Instagram, Twitter, Facebook, Send } from 'lucide-react';
 import Image from 'next/image';
+import { CONTACT, mailtoUrl, telUrl } from '@/lib/contact';
 
 const Footer = () => {
   return (
@@ -38,13 +39,12 @@ const Footer = () => {
           {/* Address and Contact */}
           <div className="mb-8 md:mb-0">
             <h3 className="text-gray-400 mb-2">Address</h3>
-            <p className="text-lg mb-12">
-            Nothern bypass, opposite quickmart thome, Gachie, Nairobi Area, Kenya, 00200
-            </p>
+            <p className="text-lg mb-6">{CONTACT.address}</p>
 
             <h3 className="text-gray-400 mb-2">Contact Us</h3>
-            <p className="text-lg mb-1">+254 792 391 610</p>
-            <p className="text-lg">contact@coltium-auto.com</p>
+            <a href={telUrl} className="text-lg block mb-1 hover:text-white transition-colors">{CONTACT.phone}</a>
+            <a href={mailtoUrl} className="text-lg block mb-1 hover:text-white transition-colors">{CONTACT.email}</a>
+            <a href={CONTACT.website} target="_blank" rel="noopener noreferrer" className="text-lg block hover:text-white transition-colors">{CONTACT.website.replace(/^https?:\/\//, '')}</a>
           </div>
 
           {/* Back to top button */}

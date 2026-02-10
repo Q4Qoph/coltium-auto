@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CustomerService from './(components)/CustomerService';
 import { useRouter } from 'next/navigation';
+import { whatsappUrl } from '@/lib/contact';
 
 export default function Home() {
     const [scrollY, setScrollY] = useState(0);
@@ -30,7 +31,7 @@ export default function Home() {
         }
     };
     const goToWhatsapp = () => {
-        window.open('https://wa.me/message/DRBDDWMHOCREO1', '_blank');
+        window.open(whatsappUrl, '_blank');
     }
 
     return (

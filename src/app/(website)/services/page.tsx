@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Sparkles, Droplet, Activity, ClipboardCheck, Users } from 'lucide-react';
 import Link from 'next/link';
+import { telUrl } from '@/lib/contact';
 
 const ServiceCard = ({ icon, title, description, bulletPoints }: any) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -307,7 +308,7 @@ const ServicesPage = () => {
               </p>
             </div>
             <div>
-              <Link href="tel:+254792391610" className="inline-flex items-center bg-[var(--primary)] rounded-full px-8 py-3 font-medium hover:bg-opacity-90 transition duration-300">
+              <Link href={telUrl} className="inline-flex items-center bg-[var(--primary)] rounded-full px-8 py-3 font-medium hover:bg-opacity-90 transition duration-300">
                 Call to book
               </Link>
             </div>

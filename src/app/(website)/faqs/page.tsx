@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Search, Shield, Users } from 'lucide-react';
+import { telUrl, mailtoUrl } from '@/lib/contact';
 
 const FaqPage = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -266,13 +267,13 @@ const FaqPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
-                href="tel:+254792391610"
+                href={telUrl}
                 className="inline-flex items-center justify-center bg-[var(--primary)] rounded-lg px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300"
               >
                 Call Us
               </a>
               <a
-                href="mailto:contact@coltium-auto.com"
+                href={mailtoUrl}
                 className="inline-flex items-center justify-center border border-white rounded-lg px-6 py-3 font-medium hover:bg-white hover:text-black transition duration-300"
               >
                 Email Us

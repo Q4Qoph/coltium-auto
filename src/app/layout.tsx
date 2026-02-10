@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Coltium-Auto | Independent Mobile Vehicle Diagnostic & Technical Oversight",
     description: "Professional, high-accuracy vehicle diagnosis and technical oversight. We diagnose correctly, explain clearly, and guide you toward informed decisions — before money is spent on repairs.",
-    url: "https://www.coltium-auto.com",
+    url: "https://www.intl-coltium.com",
     siteName: "Coltium-Auto",
     images: [
       {

@@ -1,10 +1,11 @@
 import React from 'react';
-import { Mail, Phone, Clock, MapPin } from 'lucide-react';
+import { Mail, Phone, Clock, MapPin, Globe } from 'lucide-react';
+import { CONTACT, mailtoUrl, telUrl } from '@/lib/contact';
 
 export default function ContactPage() {
   return (
-    <section className="bg-black text-white">
-      <div className="bg-gradient-to-b from-zinc-900 to-black">
+    <section className="min-h-screen bg-black text-white">
+      <div className="bg-gradient-to-b from-zinc-900 to-black pb-24">
         <div className="pt-32 px-6 container mx-auto">
           {/* Header Section */}
           <div className="flex flex-col md:flex-row">
@@ -26,33 +27,50 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Information Grid */}
-        <div className="pl-6 ml-[20%] grid grid-cols-1 md:grid-cols-2  gap-12 mb-10 ">
+        <div className="pl-6 ml-[20%] grid grid-cols-1 md:grid-cols-2 gap-12 mb-10">
           {/* Email */}
-          <div className="">
+          <div>
             <div className="flex items-start">
-              <Mail className="mr-4" size={24} />
+              <Mail className="mr-4 shrink-0" size={24} />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                <p className="text-gray-400">contact@coltium-auto.com</p>
+                <a href={mailtoUrl} className="text-gray-400 hover:text-white transition-colors">
+                  {CONTACT.email}
+                </a>
               </div>
             </div>
           </div>
 
           {/* Phone */}
-          <div className="">
+          <div>
             <div className="flex items-start">
-              <Phone className="mr-4" size={24} />
+              <Phone className="mr-4 shrink-0" size={24} />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                <p className="text-gray-400">+254 792 391 610</p>
+                <a href={telUrl} className="text-gray-400 hover:text-white transition-colors">
+                  {CONTACT.phone}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Website */}
+          <div>
+            <div className="flex items-start">
+              <Globe className="mr-4 shrink-0" size={24} />
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Website</h3>
+                <a href={CONTACT.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                  {CONTACT.website.replace(/^https?:\/\//, '')}
+                </a>
               </div>
             </div>
           </div>
 
           {/* Hours */}
-          <div className="">
+          <div>
             <div className="flex items-start mb-4">
-              <Clock className="mr-4" size={24} />
+              <Clock className="mr-4 shrink-0" size={24} />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Opening Hours</h3>
                 <p className="text-gray-400">Monday - Friday: 8:00 AM - 6:00 PM</p>
@@ -61,22 +79,23 @@ export default function ContactPage() {
               </div>
             </div>
           </div>
-          <div className="">
+
+          {/* Address */}
+          <div className="md:col-span-2">
             <div className="flex items-start mb-6">
-              <MapPin className="mr-4" size={24} />
+              <MapPin className="mr-4 shrink-0" size={24} />
               <div>
                 <h3 className="text-xl font-semibold mb-2">Our Location</h3>
                 <p className="text-gray-400 leading-relaxed">
-                  Northern Bypass, opposite QuickMart Thome,<br />
-                  Gachie, Nairobi Area,<br />
-                  Kenya, 00200
+                  {CONTACT.address}
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Location */}
+        {/* Location map (temporarily disabled) */}
+        {/*
         <div className="container mx-auto px-6 border-gray-800 pt-12">
           <div className="md:w-full h-96 bg-gray-900">
             <iframe
@@ -88,6 +107,7 @@ export default function ContactPage() {
             />
           </div>
         </div>
+        */}
       </div>
     </section>
   );
