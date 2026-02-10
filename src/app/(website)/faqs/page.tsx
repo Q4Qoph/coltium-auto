@@ -163,7 +163,7 @@ const FaqPage = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search questions..."
-              className="block w-full pl-10 pr-4 py-4  border border-zinc-700 rounded-full focus:ring-[var(--primary)] focus:border-[var(--primary)] focus:outline-none text-white"
+              className="block w-full pl-10 pr-4 py-4 border border-slate-300 rounded-full bg-white text-slate-900 placeholder:text-slate-400 focus:ring-[var(--primary)] focus:border-[var(--primary)] focus:outline-none"
             />
           </motion.div>
         </div>

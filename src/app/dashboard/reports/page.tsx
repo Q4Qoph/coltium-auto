@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge } from "@/components/ui";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Input, Label } from "@/components/ui";
 import { useReports } from "@/lib/hooks";
 import type { DiagnosticReport } from "@/types";
 import { formatDate, severityLabel } from "@/lib/utils";
@@ -12,8 +12,20 @@ export default function ReportsPage() {
   const reportIdParam = searchParams.get("reportId");
   const { data: reports = [], isLoading } = useReports();
   const [selected, setSelected] = useState<DiagnosticReport | null>(null);
+  const [search, setSearch] = useState("");
+  const [severityFilter, setSeverityFilter] = useState<"" | "critical" | "monitor" | "informational">("");
 
   const reportList = Array.isArray(reports) ? reports : [];
+  const filtered = reportList.filter((r) => {
+    const term = search.toLowerCase();
+    const matchesSearch =
+      !term ||
+      r.summary?.toLowerCase().includes(term) ||
+      r.inspection?.vehicle?.make?.toLowerCase().includes(term) ||
+      r.inspection?.vehicle?.model?.toLowerCase().includes(term);
+    const matchesSeverity = !severityFilter || r.severityRanking === severityFilter;
+    return matchesSearch && matchesSeverity;
+  });
 
   useEffect(() => {
     if (reportIdParam && reportList.length > 0) {
@@ -27,8 +39,22 @@ export default function ReportsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-spin h-8 w-8 border-2 border-[var(--primary)] border-t-transparent rounded-full" />
+      <div className="space-y-6">
+        <div>
+          <div className="h-6 w-48 rounded-md bg-slate-200 animate-pulse" />
+          <div className="mt-2 h-4 w-80 rounded-md bg-slate-100 animate-pulse" />
+        </div>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-1 space-y-2">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="h-10 w-full rounded-md bg-slate-100 border border-slate-100 animate-pulse"
+              />
+            ))}
+          </div>
+          <div className="lg:col-span-2 h-64 rounded-md bg-slate-100 border border-slate-100 animate-pulse" />
+        </div>
       </div>
     );
   }
@@ -37,21 +63,51 @@ export default function ReportsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Diagnostic reports</h1>
-        <p className="text-zinc-400 mt-1">View and download your vehicle diagnostic history.</p>
+        <p className="text-slate-500 mt-1">View, search and download your vehicle diagnostic history.</p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle>Report history</CardTitle>
-            <CardDescription>Full vehicle diagnostic history</CardDescription>
+            <div className="space-y-3">
+              <div>
+                <CardTitle>Report history</CardTitle>
+                <CardDescription>Filter by vehicle, summary or severity.</CardDescription>
+              </div>
+              <div className="space-y-2">
+                <div className="space-y-1">
+                  <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
+                  <Input
+                    placeholder="Search by vehicle or summary..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(["", "critical", "monitor", "informational"] as const).map((s) => (
+                    <button
+                      key={s || "all"}
+                      type="button"
+                      onClick={() => setSeverityFilter(s)}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold border ${
+                        severityFilter === s
+                          ? "bg-[var(--primary)] text-white border-[var(--primary)]"
+                          : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                      }`}
+                    >
+                      {s === "" ? "All" : severityLabel(s)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            {reportList.length === 0 ? (
-              <p className="text-zinc-500 text-sm">No reports yet.</p>
+            {filtered.length === 0 ? (
+              <p className="text-slate-500 text-sm">No reports match your filters.</p>
             ) : (
               <ul className="space-y-2">
-                {reportList.map((r) => (
+                {filtered.map((r) => (
                   <li key={r.id}>
                     <button
                       type="button"

@@ -1,8 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Modal } from "@/components/ui";
-import { Input, Label } from "@/components/ui";
+import { ClipboardList, Wrench } from "lucide-react";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Badge,
+  Modal,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui";
+import { Input, Label, Select } from "@/components/ui";
 import type { Inspection } from "@/types";
 import { useAssignedInspections, useStartInspection, useCompleteInspection, useUploadReport } from "@/lib/hooks";
 import { formatDate, inspectionStatusLabel } from "@/lib/utils";
@@ -24,7 +40,20 @@ export default function TechnicianDashboardPage() {
   const [uploadError, setUploadError] = useState("");
 
   const list = Array.isArray(inspections) ? inspections : [];
-  const assigned = list.filter((i) => i.status === "assigned" || i.status === "in_progress");
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"" | "assigned" | "in_progress">("");
+
+  const assignedAll = list.filter((i) => i.status === "assigned" || i.status === "in_progress");
+  const assigned = assignedAll.filter((inv) => {
+    const term = search.toLowerCase();
+    const matchesSearch =
+      !term ||
+      inv.vehicle?.make?.toLowerCase().includes(term) ||
+      inv.vehicle?.model?.toLowerCase().includes(term) ||
+      inv.vehicle?.registrationNumber?.toLowerCase().includes(term);
+    const matchesStatus = !statusFilter || inv.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   function handleStart(id: string) {
     startInspection.mutate(id);
@@ -56,64 +85,161 @@ export default function TechnicianDashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-spin h-8 w-8 border-2 border-[var(--primary)] border-t-transparent rounded-full" />
+      <div className="space-y-6">
+        <div>
+          <div className="h-6 w-56 rounded-md bg-slate-200 animate-pulse" />
+          <div className="mt-2 h-4 w-80 rounded-md bg-slate-100 animate-pulse" />
+        </div>
+        <Card>
+          <CardHeader>
+            <div className="h-5 w-40 rounded-md bg-slate-200 animate-pulse mb-2" />
+            <div className="h-4 w-72 rounded-md bg-slate-100 animate-pulse" />
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-10 w-full rounded-md bg-slate-100 border border-slate-100 animate-pulse"
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold">Assigned inspections</h1>
-        <p className="text-zinc-400 mt-1">Mark jobs in progress and upload diagnostic reports.</p>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Technician dashboard</h1>
+          <p className="text-slate-500 mt-1">
+            View your assigned inspections and upload diagnostic reports.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="bg-gradient-to-br from-sky-50 to-white border-none shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-semibold tracking-wide text-sky-700 uppercase">
+              Assigned jobs
+            </CardTitle>
+            <ClipboardList className="h-4 w-4 text-sky-500" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-slate-900">
+              {assignedAll.filter((i) => i.status === "assigned").length}
+            </p>
+            <p className="text-sm text-slate-500">Waiting to be started.</p>
+          </CardContent>
+        </Card>
+        <Card className="bg-gradient-to-br from-emerald-50 to-white border-none shadow-sm">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-xs font-semibold tracking-wide text-emerald-700 uppercase">
+              In progress
+            </CardTitle>
+            <Wrench className="h-4 w-4 text-emerald-500" />
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold text-slate-900">
+              {assignedAll.filter((i) => i.status === "in_progress").length}
+            </p>
+            <p className="text-sm text-slate-500">Currently being inspected.</p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Your jobs</CardTitle>
-          <CardDescription>
-            Start an inspection, then upload the report when complete.
-          </CardDescription>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <CardTitle>Your jobs</CardTitle>
+              <CardDescription>
+                Start an inspection, then upload the report when complete.
+              </CardDescription>
+            </div>
+            <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+              <div className="flex-1 space-y-1">
+                <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
+                <Input
+                  placeholder="Search by vehicle..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              <div className="w-full md:w-48 space-y-1">
+                <Label className="text-xs uppercase tracking-wide text-slate-500">Status</Label>
+                <Select
+                  value={statusFilter}
+                  onChange={(e) =>
+                    setStatusFilter(e.target.value as "" | "assigned" | "in_progress")
+                  }
+                >
+                  <option value="">All</option>
+                  <option value="assigned">Assigned</option>
+                  <option value="in_progress">In progress</option>
+                </Select>
+              </div>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           {assigned.length === 0 ? (
             <p className="text-zinc-500 text-sm">No assigned inspections.</p>
           ) : (
-            <ul className="divide-y divide-zinc-800">
-              {assigned.map((inv) => (
-                <li key={inv.id} className="py-4 flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">
-                      {inv.vehicle?.make} {inv.vehicle?.model} ({inv.vehicle?.year})
-                    </p>
-                    <p className="text-sm text-zinc-500">
-                      Requested {formatDate(inv.requestedAt)}
-                      {inv.scheduledAt && ` · Scheduled ${formatDate(inv.scheduledAt)}`}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant={
-                        inv.status === "in_progress" ? "warning" : "default"
-                      }
-                    >
-                      {inspectionStatusLabel(inv.status)}
-                    </Badge>
-                    {inv.status === "assigned" && (
-                      <Button size="sm" onClick={() => handleStart(inv.id)}>
-                        Start
-                      </Button>
-                    )}
-                    {inv.status === "in_progress" && (
-                      <Button size="sm" variant="secondary" onClick={() => setUploadModal(inv)}>
-                        Upload report
-                      </Button>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Vehicle</TableHead>
+                  <TableHead>Requested</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {assigned.map((inv) => (
+                  <TableRow key={inv.id}>
+                    <TableCell>
+                      <div className="font-medium">
+                        {inv.vehicle?.make} {inv.vehicle?.model} ({inv.vehicle?.year})
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm text-slate-600">
+                        {formatDate(inv.requestedAt)}
+                        {inv.scheduledAt && ` · ${formatDate(inv.scheduledAt)}`}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={inv.status === "in_progress" ? "warning" : "default"}
+                      >
+                        {inspectionStatusLabel(inv.status)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right space-x-2">
+                      {inv.status === "assigned" && (
+                        <Button size="sm" onClick={() => handleStart(inv.id)}>
+                          Start
+                        </Button>
+                      )}
+                      {inv.status === "in_progress" && (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => setUploadModal(inv)}
+                        >
+                          Upload report
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           )}
         </CardContent>
       </Card>
@@ -131,7 +257,7 @@ export default function TechnicianDashboardPage() {
           <div className="space-y-2">
             <Label>Summary</Label>
             <textarea
-              className="flex min-h-[80px] w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+              className="flex min-h-[80px] w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
               value={uploadForm.summary}
               onChange={(e) => setUploadForm((f) => ({ ...f, summary: e.target.value }))}
               placeholder="Brief summary of findings"
@@ -140,7 +266,7 @@ export default function TechnicianDashboardPage() {
           <div className="space-y-2">
             <Label>Overall severity</Label>
             <select
-              className="flex h-10 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+              className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
               value={uploadForm.severityRanking}
               onChange={(e) =>
                 setUploadForm((f) => ({
@@ -157,7 +283,7 @@ export default function TechnicianDashboardPage() {
           <div className="space-y-2">
             <Label>Recommendations (one per line)</Label>
             <textarea
-              className="flex min-h-[60px] w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+              className="flex min-h-[60px] w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900"
               value={uploadForm.recommendations}
               onChange={(e) => setUploadForm((f) => ({ ...f, recommendations: e.target.value }))}
               placeholder="Recommendation 1&#10;Recommendation 2"

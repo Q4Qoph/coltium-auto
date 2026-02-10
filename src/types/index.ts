@@ -30,9 +30,21 @@ export interface Subscription {
   userId: string;
   planId: string;
   plan?: SubscriptionPlan;
-  status: "active" | "cancelled" | "expired" | "trialing";
+  status: "pending" | "active" | "cancelled" | "expired" | "trialing" | "failed";
   currentPeriodEnd: string;
   createdAt: string;
+}
+
+/** Response when creating a subscription (M-Pesa STK push initiated) */
+export interface SubscriptionCreateResponse {
+  subscription: Subscription;
+  payment: {
+    id: string;
+    status: string;
+    amount: number;
+    checkoutRequestId: string;
+    customerMessage: string;
+  };
 }
 
 export type VehicleMake = string;

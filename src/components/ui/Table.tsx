@@ -5,13 +5,19 @@ import { cn } from "@/lib/utils";
 export function Table({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) {
   return (
     <div className="overflow-x-auto">
-      <table className={cn("w-full caption-bottom text-sm", className)} {...props} />
+      <table
+        className={cn(
+          "w-full caption-bottom text-sm border border-slate-200 rounded-lg overflow-hidden bg-white",
+          className
+        )}
+        {...props}
+      />
     </div>
   );
 }
 
 export function TableHeader({ ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
-  return <thead className="border-b border-zinc-700" {...props} />;
+  return <thead className="border-b border-slate-200 bg-slate-50" {...props} />;
 }
 
 export function TableBody({ ...props }: React.HTMLAttributes<HTMLTableSectionElement>) {
@@ -21,7 +27,10 @@ export function TableBody({ ...props }: React.HTMLAttributes<HTMLTableSectionEle
 export function TableRow({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) {
   return (
     <tr
-      className={cn("border-b border-zinc-800 transition-colors hover:bg-zinc-800/50", className)}
+      className={cn(
+        "border-b border-slate-100 transition-colors hover:bg-slate-50",
+        className
+      )}
       {...props}
     />
   );
@@ -31,7 +40,7 @@ export function TableHead({ className, ...props }: React.HTMLAttributes<HTMLTabl
   return (
     <th
       className={cn(
-        "h-12 px-4 text-left align-middle font-medium text-zinc-400",
+        "h-11 px-4 text-left align-middle font-medium text-slate-600 text-xs uppercase tracking-wide",
         className
       )}
       {...props}

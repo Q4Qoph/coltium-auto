@@ -1,17 +1,31 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Car, ClipboardList, FileText } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui";
 import { useVehicles, useInspections, useMySubscription } from "@/lib/hooks";
 import { formatDate } from "@/lib/utils";
 
 export default function DashboardPage() {
-  const { data: vehicles = [], isLoading: vehiclesLoading } = useVehicles();
-  const { data: inspections = [], isLoading: inspectionsLoading } = useInspections();
-  const { data: subscription, isLoading: subLoading } = useMySubscription();
+  const {
+    data: vehicles = [],
+    isLoading: vehiclesLoading,
+    error: vehiclesError,
+  } = useVehicles();
+  const {
+    data: inspections = [],
+    isLoading: inspectionsLoading,
+    error: inspectionsError,
+  } = useInspections();
+  const {
+    data: subscription,
+    isLoading: subLoading,
+    error: subscriptionError,
+  } = useMySubscription();
 
   const loading = vehiclesLoading || inspectionsLoading || subLoading;
+  const error = vehiclesError || inspectionsError || subscriptionError;
   const vehicleList = Array.isArray(vehicles) ? vehicles : [];
   const inspectionList = Array.isArray(inspections) ? inspections : [];
   const pending = inspectionList.filter(
@@ -19,59 +33,103 @@ export default function DashboardPage() {
   );
   const recent = inspectionList.slice(0, 5);
 
-  if (loading) {
+  if (loading && !error) {
     return (
-      <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-spin h-8 w-8 border-2 border-[var(--primary)] border-t-transparent rounded-full" />
+      <div className="space-y-8">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
+            <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
+          </div>
+          <div className="h-8 w-32 rounded-md bg-slate-200 animate-pulse" />
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-32 w-full rounded-lg bg-slate-100 border border-slate-100 animate-pulse"
+            />
+          ))}
+        </div>
+        <div className="h-64 w-full rounded-lg bg-slate-100 border border-slate-100 animate-pulse" />
       </div>
     );
   }
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="text-zinc-400 mt-1">
-          Manage your vehicles and diagnostic inspections.
-        </p>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <p className="text-zinc-400 mt-1">
+            Manage your vehicles and diagnostic inspections.
+          </p>
+        </div>
+        <Image
+          src="/logo.png"
+          alt="Coltium-Auto"
+          width={120}
+          height={40}
+          className="h-8 w-auto"
+        />
       </div>
 
+      {error && (
+        <div className="rounded-md border border-red-800 bg-red-900/30 px-3 py-2 text-sm text-red-200">
+          {(error as { message?: string }).message ?? "Something went wrong loading your data."}
+        </div>
+      )}
+
       <div className="grid gap-4 md:grid-cols-3">
-        <Card>
+        <Card className="bg-gradient-to-br from-sky-50 to-white border-none shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-zinc-400">Vehicles</CardTitle>
-            <Car className="h-4 w-4 text-zinc-500" />
+            <CardTitle className="text-xs font-semibold tracking-wide text-sky-700 uppercase">
+              Vehicles
+            </CardTitle>
+            <Car className="h-4 w-4 text-sky-500" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{vehicleList.length}</p>
+            <p className="text-3xl font-bold text-slate-900">{vehicleList.length}</p>
             <Link href="/dashboard/vehicles" className="text-sm text-[var(--primary)] hover:underline">
               Manage vehicles
             </Link>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-amber-50 to-white border-none shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-zinc-400">Pending inspections</CardTitle>
-            <ClipboardList className="h-4 w-4 text-zinc-500" />
+            <CardTitle className="text-xs font-semibold tracking-wide text-amber-700 uppercase">
+              Pending inspections
+            </CardTitle>
+            <ClipboardList className="h-4 w-4 text-amber-500" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{pending.length}</p>
+            <p className="text-3xl font-bold text-slate-900">{pending.length}</p>
             <Link href="/dashboard/inspections" className="text-sm text-[var(--primary)] hover:underline">
               View inspections
             </Link>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-gradient-to-br from-emerald-50 to-white border-none shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-zinc-400">Subscription</CardTitle>
-            <FileText className="h-4 w-4 text-zinc-500" />
+            <CardTitle className="text-xs font-semibold tracking-wide text-emerald-700 uppercase">
+              Subscription
+            </CardTitle>
+            <FileText className="h-4 w-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">
-              {subscription ? (subscription as { plan?: { name?: string } }).plan?.name ?? "Active" : "None"}
+            <p className="text-3xl font-bold text-slate-900">
+              {subscription
+                ? (subscription as { status?: string }).status === "pending"
+                  ? "Payment pending"
+                  : (subscription as { plan?: { name?: string } }).plan?.name ?? "Active"
+                : "None"}
             </p>
             <Link href="/pricing" className="text-sm text-[var(--primary)] hover:underline">
-              {subscription ? "Manage" : "Subscribe"}
+              {subscription
+                ? (subscription as { status?: string }).status === "pending"
+                  ? "Complete payment"
+                  : "Manage"
+                : "Subscribe"}
             </Link>
           </CardContent>
         </Card>
@@ -90,18 +148,18 @@ export default function DashboardPage() {
               {recent.map((inv) => (
                 <li
                   key={inv.id}
-                  className="flex items-center justify-between py-2 border-b border-zinc-800 last:border-0"
+                  className="flex items-center justify-between py-2 border-b border-slate-200 last:border-0"
                 >
                   <span className="text-sm">
                     {inv.vehicle?.make} {inv.vehicle?.model} — {formatDate(inv.requestedAt)}
                   </span>
                   <span
-                    className={`text-xs px-2 py-1 rounded ${
+                    className={`text-xs px-2.5 py-1 rounded-full font-semibold tracking-wide uppercase ${
                       inv.status === "completed"
-                        ? "bg-emerald-900/40 text-emerald-300"
+                        ? "bg-emerald-50 text-emerald-700"
                         : inv.status === "in_progress"
-                          ? "bg-amber-900/40 text-amber-300"
-                          : "bg-zinc-700 text-zinc-300"
+                          ? "bg-amber-50 text-amber-700"
+                          : "bg-slate-100 text-slate-700"
                     }`}
                   >
                     {inv.status.replace("_", " ")}

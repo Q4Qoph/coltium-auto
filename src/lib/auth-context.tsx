@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import type { User, Role } from "@/types";
+import type { User, Role, AuthResponse } from "@/types";
 import { authApi } from "@/lib/api";
 import { mockLogin, mockSignup } from "@/lib/mock-auth";
 
@@ -15,8 +15,8 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, name: string, role?: Role) => Promise<void>;
+  login: (email: string, password: string) => Promise<AuthResponse>;
+  signup: (email: string, password: string, name: string, role?: Role) => Promise<AuthResponse>;
   logout: () => void;
   setUser: (user: User | null) => void;
 }
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loadStored();
   }, [loadStored]);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string): Promise<AuthResponse> => {
     const res = hasApi
       ? await authApi.login({ email, password })
       : await mockLogin(email, password);
@@ -65,9 +65,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setAuthCookie(res.token);
     }
     setState({ user: res.user, token: res.token, loading: false });
+    return res;
   }, [hasApi, setAuthCookie]);
 
-  const signup = useCallback(async (email: string, password: string, name: string, role?: Role) => {
+  const signup = useCallback(async (email: string, password: string, name: string, role?: Role): Promise<AuthResponse> => {
     const res = hasApi
       ? await authApi.signup({ email, password, name, role })
       : await mockSignup(email, password, name, role ?? "user");
@@ -77,6 +78,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setAuthCookie(res.token);
     }
     setState({ user: res.user, token: res.token, loading: false });
+    return res;
   }, [hasApi, setAuthCookie]);
 
   const logout = useCallback(() => {

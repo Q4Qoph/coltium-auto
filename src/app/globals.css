@@ -1,9 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #18254a;
-  --foreground: #f1f5f9;
-  /* Coltium-Auto theme */
+  /* Light surface background */
+  --background: #f9fafb; /* near-white */
+  --foreground: #020617; /* slate-950 for main text */
+
+  /* Coltium-Auto accents */
   --primary: #47aa3a;
   --primary-hover: #3d9432;
   --secondary: #1f4c69;

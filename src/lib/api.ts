@@ -10,6 +10,7 @@ import type {
   DiagnosticReport,
   Subscription,
   SubscriptionPlan,
+  SubscriptionCreateResponse,
   AuthResponse,
   LoginRequest,
   SignupRequest,
@@ -125,10 +126,16 @@ export const reportsApi = {
 export const subscriptionsApi = {
   plans: () => request<SubscriptionPlan[]>("/subscriptions/plans"),
   mine: () => request<Subscription | null>("/subscriptions/mine"),
-  create: (body: { planId: string; interval: "monthly" | "yearly" }) =>
-    request<Subscription>("/subscriptions", { method: "POST", body: JSON.stringify(body) }),
+  create: (body: { planId: string; interval: "monthly" | "yearly"; phoneNumber: string }) =>
+    request<SubscriptionCreateResponse>("/subscriptions", { method: "POST", body: JSON.stringify(body) }),
   cancel: (id: string) =>
     request<Subscription>(`/subscriptions/${id}/cancel`, { method: "POST" }),
+};
+
+// —— Payments (M-Pesa status polling) ——
+export const paymentsApi = {
+  getStatus: (checkoutRequestId: string) =>
+    request<{ payment: { id: string; status: string }; mpesaStatus?: unknown }>(`/payments/status/${checkoutRequestId}`),
 };
 
 // —— Technicians (admin) ——

@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased min-h-screen text-white" style={{ backgroundColor: "var(--background)" }}>
+      <body className="antialiased min-h-screen text-slate-900 bg-[var(--background)]">
         <QueryProvider>
           <AuthProvider>{children}</AuthProvider>
         </QueryProvider>

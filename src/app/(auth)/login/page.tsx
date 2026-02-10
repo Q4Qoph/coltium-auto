@@ -21,8 +21,21 @@ function LoginForm() {
     setError("");
     setLoading(true);
     try {
-      await login(email, password);
-      router.push(from);
+      const res = await login(email, password);
+
+      // Route primarily by role so admins/technicians always land
+      // in their dashboards, regardless of previous ?from=
+      let target: string;
+      if (res.user.role === "admin") {
+        target = "/admin";
+      } else if (res.user.role === "technician") {
+        target = "/technician";
+      } else {
+        // Normal user can be sent back to where they came from
+        target = from || "/dashboard";
+      }
+
+      router.push(target);
       router.refresh();
     } catch (err: unknown) {
       setError((err as { message?: string })?.message ?? "Login failed");

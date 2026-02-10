@@ -1,7 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, CardHeader, CardTitle, CardContent, Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Modal, Input, Label } from "@/components/ui";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  Modal,
+  Input,
+  Label,
+  Select,
+} from "@/components/ui";
 import { useTechnicians, useCreateTechnician } from "@/lib/hooks";
 
 export default function AdminTechniciansPage() {
@@ -12,6 +28,16 @@ export default function AdminTechniciansPage() {
   const [error, setError] = useState("");
 
   const list = Array.isArray(technicians) ? technicians : [];
+  const [search, setSearch] = useState("");
+
+  const filtered = list.filter((t) => {
+    if (!search) return true;
+    const term = search.toLowerCase();
+    return (
+      t.name?.toLowerCase().includes(term) ||
+      t.email?.toLowerCase().includes(term)
+    );
+  });
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -35,14 +61,6 @@ export default function AdminTechniciansPage() {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-spin h-8 w-8 border-2 border-[var(--primary)] border-t-transparent rounded-full" />
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -55,33 +73,53 @@ export default function AdminTechniciansPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Technician list</CardTitle>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <CardTitle>Technician list</CardTitle>
+              <p className="text-sm text-slate-500 mt-1">Search technicians by name or email.</p>
+            </div>
+            <div className="w-full md:w-64 space-y-1">
+              <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
+              <Input
+                placeholder="Search technicians..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {list.length === 0 ? (
+          {isLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-8 w-full rounded-md bg-slate-100 border border-slate-100 animate-pulse"
+                />
+              ))}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="py-8 text-center text-slate-500">
+              No technicians match your search.
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={2} className="text-center text-zinc-500">
-                    No technicians. Add one to assign inspections.
-                  </TableCell>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
                 </TableRow>
-              ) : (
-                list.map((t) => (
+              </TableHeader>
+              <TableBody>
+                {filtered.map((t) => (
                   <TableRow key={t.id}>
                     <TableCell>{t.name}</TableCell>
                     <TableCell>{t.email}</TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 
@@ -89,7 +127,7 @@ export default function AdminTechniciansPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <p className="text-sm text-red-500">{error}</p>}
           <div className="space-y-2">
-            <Label>Name</Label>
+            <Label className="text-sm font-medium text-slate-700">Name</Label>
             <Input
               value={form.name}
               onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
@@ -97,7 +135,7 @@ export default function AdminTechniciansPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label>Email</Label>
+            <Label className="text-sm font-medium text-slate-700">Email</Label>
             <Input
               type="email"
               value={form.email}
@@ -106,7 +144,7 @@ export default function AdminTechniciansPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label>Password</Label>
+            <Label className="text-sm font-medium text-slate-700">Password</Label>
             <Input
               type="password"
               value={form.password}

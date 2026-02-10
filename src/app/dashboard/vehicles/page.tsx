@@ -2,7 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Modal } from "@/components/ui";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Modal,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@/components/ui";
 import { Input, Label } from "@/components/ui";
 import { useVehicles, useCreateVehicle, useDeleteVehicle } from "@/lib/hooks";
 
@@ -25,6 +39,18 @@ export default function VehiclesPage() {
   const [error, setError] = useState("");
 
   const vehicleList = Array.isArray(vehicles) ? vehicles : [];
+  const [search, setSearch] = useState("");
+
+  const filtered = vehicleList.filter((v) => {
+    const term = search.toLowerCase();
+    if (!term) return true;
+    return (
+      v.make?.toLowerCase().includes(term) ||
+      v.model?.toLowerCase().includes(term) ||
+      v.registrationNumber?.toLowerCase().includes(term) ||
+      String(v.year ?? "").includes(term)
+    );
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -57,9 +83,34 @@ export default function VehiclesPage() {
   }
 
   if (isLoading) {
+    // Skeleton state while loading vehicles
     return (
-      <div className="flex items-center justify-center min-h-[40vh]">
-        <div className="animate-spin h-8 w-8 border-2 border-[var(--primary)] border-t-transparent rounded-full" />
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
+            <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
+          </div>
+          <div className="h-9 w-28 rounded-md bg-slate-200 animate-pulse" />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <div className="h-5 w-32 rounded-md bg-slate-200 animate-pulse mb-2" />
+            <div className="h-4 w-56 rounded-md bg-slate-100 animate-pulse" />
+          </CardHeader>
+          <CardContent>
+            <div className="h-10 w-full rounded-md bg-slate-100 animate-pulse mb-2" />
+            <div className="space-y-2 mt-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-8 w-full rounded-md bg-slate-50 border border-slate-100 animate-pulse"
+                />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
@@ -68,49 +119,78 @@ export default function VehiclesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Vehicles</h1>
-          <p className="text-zinc-400 mt-1">Add and manage vehicles for diagnostic inspections.</p>
+          <h1 className="text-2xl font-bold text-slate-900">Vehicles</h1>
+          <p className="text-slate-500 mt-1">Add and manage vehicles for diagnostic inspections.</p>
         </div>
         <Button onClick={() => setModalOpen(true)}>Add vehicle</Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Your vehicles</CardTitle>
-          <CardDescription>Request inspections for any vehicle below.</CardDescription>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <CardTitle>Your vehicles</CardTitle>
+              <CardDescription>Request inspections for any vehicle below.</CardDescription>
+            </div>
+            <div className="w-full md:w-64 space-y-1">
+              <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
+              <Input
+                placeholder="Search by make, model, reg..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          {vehicleList.length === 0 ? (
-            <div className="text-center py-12 text-zinc-500">
+          {filtered.length === 0 ? (
+            <div className="text-center py-12 text-slate-500">
               <p>No vehicles yet.</p>
               <Button className="mt-4" variant="outline" onClick={() => setModalOpen(true)}>
                 Add your first vehicle
               </Button>
             </div>
           ) : (
-            <ul className="divide-y divide-zinc-800">
-              {vehicleList.map((v) => (
-                <li key={v.id} className="py-4 flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">
-                      {v.year} {v.make} {v.model}
-                    </p>
-                    <p className="text-sm text-zinc-500">
-                      {v.registrationNumber && `${v.registrationNumber} · `}
-                      {v.mileage != null && `${v.mileage} ${v.mileageUnit ?? "km"}`}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Link href={`/dashboard/inspections?vehicleId=${v.id}`}>
-                      <Button variant="outline" size="sm">Request inspection</Button>
-                    </Link>
-                    <Button variant="ghost" size="sm" onClick={() => handleDelete(v.id)}>
-                      Remove
-                    </Button>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Vehicle</TableHead>
+                  <TableHead>Registration</TableHead>
+                  <TableHead>Mileage</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((v) => (
+                  <TableRow key={v.id}>
+                    <TableCell>
+                      <div className="font-medium">
+                        {v.year} {v.make} {v.model}
+                      </div>
+                    </TableCell>
+                    <TableCell>{v.registrationNumber ?? "—"}</TableCell>
+                    <TableCell>
+                      {v.mileage != null ? `${v.mileage} ${v.mileageUnit ?? "km"}` : "—"}
+                    </TableCell>
+                    <TableCell className="text-right space-x-2">
+                      <Link href={`/dashboard/inspections?vehicleId=${v.id}`}>
+                        <Button variant="outline" size="sm">
+                          Request inspection
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-600 hover:bg-red-50"
+                        onClick={() => handleDelete(v.id)}
+                      >
+                        Remove
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           )}
         </CardContent>
       </Card>
@@ -179,7 +259,7 @@ export default function VehiclesPage() {
             <div className="space-y-2">
               <Label>Unit</Label>
               <select
-                className="flex h-10 w-full rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-white"
+                className="flex h-10 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800"
                 value={form.mileageUnit}
                 onChange={(e) => setForm((f) => ({ ...f, mileageUnit: e.target.value as "km" | "mi" }))}
               >

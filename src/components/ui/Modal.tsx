@@ -33,13 +33,13 @@ export function Modal({ open, onClose, title, description, children, className }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black/80" onClick={onClose} aria-hidden />
+      <div className="fixed inset-0 bg-black/40" onClick={onClose} aria-hidden />
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? "modal-title" : undefined}
         className={cn(
-          "relative z-50 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg border border-zinc-700 bg-zinc-900 p-6 shadow-xl",
+          "relative z-50 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-lg border border-slate-200 bg-white p-6",
           className
         )}
         onClick={(e) => e.stopPropagation()}
@@ -47,11 +47,11 @@ export function Modal({ open, onClose, title, description, children, className }
         <div className="flex items-start justify-between gap-4">
           <div>
             {title && (
-              <h2 id="modal-title" className="text-lg font-semibold text-white">
+              <h2 id="modal-title" className="text-lg font-semibold text-slate-900">
                 {title}
               </h2>
             )}
-            {description && <p className="mt-1 text-sm text-zinc-400">{description}</p>}
+            {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
           </div>
           <Button variant="ghost" size="sm" onClick={onClose} className="shrink-0">
             <X className="h-4 w-4" />
