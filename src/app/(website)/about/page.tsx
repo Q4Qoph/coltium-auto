@@ -5,30 +5,41 @@ import { Button } from "@/components/ui";
 
 export default function AboutPage() {
   return (
-    <div className="pt-32 pb-20 px-6">
-      <div className="container mx-auto max-w-3xl">
-        <h1 className="text-4xl font-bold mb-6">About Coltium-Auto</h1>
-        <p className="text-zinc-400 text-lg mb-6">
-          Coltium-Auto is an independent, mobile vehicle diagnostic and technical oversight service.
-          We provide professional, high-accuracy diagnosis for modern vehicles — without selling repairs or parts.
-        </p>
-        <div className="space-y-4 text-zinc-300 mb-10">
-          <p>
-            Our role is simple: diagnose vehicles correctly, explain findings clearly, and guide owners and
-            organisations toward informed decisions before money is spent on repairs.
-          </p>
-          <p>
-            We operate like a medical diagnostic practice, but for vehicles. We do not work for garages,
-            insurers, or warranty providers. Our only incentive is technical accuracy and your long-term interest.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-4">
-          <Link href="/services">
-            <Button>View services</Button>
-          </Link>
-          <Link href="/pricing">
-            <Button variant="outline">Pricing & plans</Button>
-          </Link>
+    <div className="bg-black text-white min-h-screen">
+      <div className="pt-32 pb-20 px-6 container mx-auto">
+        <div className="flex flex-col md:flex-row">
+          <div className="md:w-1/5">
+            <div className="flex items-center mb-8">
+              <div className="w-10 h-px bg-[var(--primary)] mr-3"></div>
+              <span className="text-sm uppercase tracking-wider">About</span>
+            </div>
+          </div>
+
+          <div className="md:w-4/5 max-w-3xl">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              Independent vehicle diagnostic oversight — like a medical diagnostic practice, but for cars.
+            </h1>
+            <div className="space-y-4 text-zinc-300 mb-10">
+              <p>
+                Modern vehicles are complex systems of software, electronics, sensors, and mechanical components.
+                In this environment, rushed diagnosis and guesswork are common — and parts are often replaced
+                without addressing the real root cause.
+              </p>
+              <p>
+                Coltium-Auto fills the missing role of a neutral, professional diagnostic authority. We focus
+                solely on technical truth: what is really wrong, how severe it is, and what should — and should not —
+                be done next.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/services">
+                <Button>View services</Button>
+              </Link>
+              <Link href="/pricing">
+                <Button variant="outline">Pricing & plans</Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>

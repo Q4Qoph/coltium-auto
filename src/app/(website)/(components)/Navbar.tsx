@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useOptionalAuth } from "@/lib/auth-context";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
   const auth = useOptionalAuth();
 
   useEffect(() => {
@@ -22,13 +24,17 @@ const Navbar = () => {
     };
   }, []);
 
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  };
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black bg-opacity-90 py-3' : 'bg-transparent py-6'
-        }`}
+      className="fixed w-full z-50 transition-all duration-300 bg-black bg-opacity-90 py-4"
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center">
@@ -45,12 +51,66 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-8">
-          <Link href="/" className="text-sm text-gray-300 hover:text-white transition-colors">Home</Link>
-          <Link href="/about" className="text-sm text-gray-300 hover:text-white transition-colors">About</Link>
-          <Link href="/services" className="text-sm text-gray-300 hover:text-white transition-colors">Services</Link>
-          <Link href="/pricing" className="text-sm text-gray-300 hover:text-white transition-colors">Pricing</Link>
-          <Link href="/faqs" className="text-sm text-gray-300 hover:text-white transition-colors">Faqs</Link>
-          <Link href="/contact" className="text-sm text-gray-300 hover:text-white transition-colors">Contact</Link>
+          <Link
+            href="/"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            href="/about"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/about")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            About
+          </Link>
+          <Link
+            href="/services"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/services")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            Services
+          </Link>
+          <Link
+            href="/pricing"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/pricing")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            Pricing
+          </Link>
+          <Link
+            href="/faqs"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/faqs")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            Faqs
+          </Link>
+          <Link
+            href="/contact"
+            className={`text-sm pb-1 border-b-2 transition-colors ${
+              isActive("/contact")
+                ? "text-white border-[var(--primary)]"
+                : "text-gray-300 border-transparent hover:text-white hover:border-[var(--primary)]"
+            }`}
+          >
+            Contact
+          </Link>
           {auth?.user ? (
             <Link href={auth.user.role === "admin" ? "/admin" : auth.user.role === "technician" ? "/technician" : "/dashboard"} className="bg-zinc-700 text-white hover:bg-zinc-600 transition-colors px-4 py-2 rounded-sm text-sm">
               Dashboard
@@ -84,12 +144,54 @@ const Navbar = () => {
           className="md:hidden bg-black bg-opacity-95"
         >
           <div className="container mx-auto px-6 py-4 flex flex-col space-y-4">
-            <Link href="/" className="text-gray-300 hover:text-white transition-colors py-2">Home</Link>
-            <Link href="/about" className="text-gray-300 hover:text-white transition-colors py-2">About</Link>
-            <Link href="/services" className="text-gray-300 hover:text-white transition-colors py-2">Services</Link>
-            <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors py-2">Pricing</Link>
-            <Link href="/faqs" className="text-gray-300 hover:text-white transition-colors py-2">Faqs</Link>
-            <Link href="/contact" className="text-gray-300 hover:text-white transition-colors py-2">Contact</Link>
+            <Link
+              href="/"
+              className={`py-2 transition-colors ${
+                isActive("/") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className={`py-2 transition-colors ${
+                isActive("/about") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              href="/services"
+              className={`py-2 transition-colors ${
+                isActive("/services") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Services
+            </Link>
+            <Link
+              href="/pricing"
+              className={`py-2 transition-colors ${
+                isActive("/pricing") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/faqs"
+              className={`py-2 transition-colors ${
+                isActive("/faqs") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Faqs
+            </Link>
+            <Link
+              href="/contact"
+              className={`py-2 transition-colors ${
+                isActive("/contact") ? "text-white font-semibold" : "text-gray-300 hover:text-white"
+              }`}
+            >
+              Contact
+            </Link>
             {auth?.user ? (
               <Link href={auth.user.role === "admin" ? "/admin" : auth.user.role === "technician" ? "/technician" : "/dashboard"} className="bg-zinc-700 text-white px-6 py-2 rounded-sm text-sm self-start">
                 Dashboard
