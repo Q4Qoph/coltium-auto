@@ -6,10 +6,13 @@ import { motion } from 'framer-motion';
 import CustomerService from './(components)/CustomerService';
 import { useRouter } from 'next/navigation';
 import { whatsappUrl } from '@/lib/contact';
+import { useWebsiteTheme } from '@/lib/website-theme';
 
 export default function Home() {
     const [scrollY, setScrollY] = useState(0);
     const router = useRouter()
+    const { theme } = useWebsiteTheme();
+    const isDark = theme === "dark";
 
     useEffect(() => {
         const handleScroll = () => {
@@ -35,9 +38,9 @@ export default function Home() {
     }
 
     return (
-        <div className="bg-black text-white min-h-screen">
+        <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
             {/* Hero Section */}
-            <section className="relative h-[60vh] sm:h-screen flex items-center pt-24 md:pt-28">
+            <section className="relative h-[60vh] sm:h-screen flex items-center pt-24 md:pt-28 text-white">
                 <div className="absolute inset-0 overflow-hidden">
                     <Image
                         src="/1.png"
@@ -74,7 +77,7 @@ export default function Home() {
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <button
                                 onClick={() => router.push('/login')}
-                                className="bg-[var(--primary)] transition-colors px-8 py-3 rounded-sm flex items-center gap-2"
+                                className="bg-[var(--primary)] transition-colors px-8 py-3 rounded-full flex items-center gap-2"
                             >
                                 Book a diagnostic
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -87,7 +90,7 @@ export default function Home() {
                             </button>
                             <button
                                 onClick={() => router.push('/services')}
-                                className="border border-white hover:bg-white hover:text-black transition-colors px-8 py-3 rounded-sm flex items-center gap-2"
+                                className="border border-white hover:bg-white hover:text-black transition-colors px-8 py-3 rounded-full flex items-center gap-2"
                             >
                                 View services & plans
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -107,7 +110,7 @@ export default function Home() {
             </section>
 
             {/* About / Problem Section */}
-            <section className="py-16 bg-black text-white">
+            <section className={isDark ? "py-16 bg-black text-white" : "py-16 bg-white text-slate-900"}>
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/5">
@@ -125,7 +128,9 @@ export default function Home() {
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-8 pt-4">
-                                <div className="space-y-4 text-gray-300 text-sm md:text-base">
+                                <div className={`space-y-4 text-sm md:text-base ${
+                                  isDark ? "text-gray-300" : "text-slate-700"
+                                }`}>
                                     <p>
                                         Modern vehicles are complex systems of software, electronics, sensors, and mechanical components.
                                         In this environment, rushed diagnosis and guesswork are common — and parts are often replaced
@@ -137,9 +142,15 @@ export default function Home() {
                                         be done next.
                                     </p>
                                 </div>
-                                <div className="space-y-3 text-gray-300 text-sm md:text-base">
-                                    <div className="border-t border-gray-700 pt-4">
-                                        <p className="font-semibold mb-2 text-white">We help when:</p>
+                                <div className={`space-y-3 text-sm md:text-base ${
+                                  isDark ? "text-gray-300" : "text-slate-700"
+                                }`}>
+                                    <div className={`border-t pt-4 ${
+                                      isDark ? "border-gray-700" : "border-slate-200"
+                                    }`}>
+                                        <p className="font-semibold mb-2">
+                                          We help when:
+                                        </p>
                                         <ul className="space-y-1 list-disc list-inside">
                                             <li>Warning lights or performance issues appear with no clear explanation.</li>
                                             <li>Multiple garages give conflicting repair recommendations.</li>
@@ -147,8 +158,12 @@ export default function Home() {
                                             <li>You need to know what is urgent versus optional.</li>
                                         </ul>
                                     </div>
-                                    <div className="border-t border-gray-700 pt-4">
-                                        <p className="font-semibold mb-2 text-white">Our role is simple:</p>
+                                    <div className={`border-t pt-4 ${
+                                      isDark ? "border-gray-700" : "border-slate-200"
+                                    }`}>
+                                        <p className="font-semibold mb-2">
+                                          Our role is simple:
+                                        </p>
                                         <p>
                                             Diagnose vehicles correctly, explain findings clearly, and guide owners and organizations
                                             toward informed decisions — before money is spent on repairs.

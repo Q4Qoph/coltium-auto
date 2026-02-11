@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { LayoutDashboard, Users, ClipboardList, FileText, LogOut } from "lucide-react";
@@ -21,9 +21,10 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading, logout } = useAuth();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || loggingOut) return;
     if (!user) {
       router.replace("/login?from=/admin");
       return;
@@ -33,7 +34,7 @@ export default function AdminLayout({
       else if (user.role === "user") router.replace("/dashboard");
       else router.replace("/");
     }
-  }, [user, loading, router]);
+  }, [user, loading, loggingOut, router]);
 
   if (loading || !user) {
     return (
@@ -95,6 +96,7 @@ export default function AdminLayout({
           </p>
           <button
             onClick={() => {
+              setLoggingOut(true);
               logout();
               router.push("/");
             }}

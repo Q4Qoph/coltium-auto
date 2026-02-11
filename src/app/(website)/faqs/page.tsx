@@ -4,8 +4,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Search, Shield, Users } from 'lucide-react';
 import { telUrl, mailtoUrl } from '@/lib/contact';
+import { useWebsiteTheme } from '@/lib/website-theme';
 
 const FaqPage = () => {
+  const { theme } = useWebsiteTheme();
+  const isDark = theme === "dark";
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
@@ -128,9 +131,9 @@ const FaqPage = () => {
   const filteredFaqs = getFilteredFaqs();
 
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 bg-gradient-to-b from-zinc-900 to-black">
+      <section className={isDark ? "pt-32 pb-20 px-6 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 pb-20 px-6 bg-slate-100"}>
         <div className="container mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -144,7 +147,7 @@ const FaqPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-gray-400 text-xl max-w-2xl mx-auto mb-12"
+            className={`${isDark ? "text-gray-400" : "text-slate-600"} text-xl max-w-2xl mx-auto mb-12`}
           >
             Everything you need to know about Coltium-Auto&apos;s independent vehicle diagnostic and technical oversight services.
           </motion.p>
@@ -185,7 +188,9 @@ const FaqPage = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center px-6 py-3 rounded-full text-sm font-medium transition-all ${activeTab === tab.id
                     ? 'bg-[var(--primary)] text-white'
-                    : 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+                    : isDark
+                      ? 'bg-zinc-800 text-gray-300 hover:bg-zinc-700'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -209,7 +214,14 @@ const FaqPage = () => {
                 >
                   <button
                     onClick={() => toggleItem(faq.id)}
-                    className={`w-full flex justify-between items-center p-5 text-left rounded-lg transition-all ${expandedItems[faq.id] ? 'bg-zinc-800' : 'bg-zinc-900 hover:bg-zinc-800'
+                    className={`w-full flex justify-between items-center p-5 text-left rounded-lg transition-all ${
+                      expandedItems[faq.id]
+                        ? isDark
+                          ? 'bg-zinc-800'
+                          : 'bg-slate-100'
+                        : isDark
+                          ? 'bg-zinc-900 hover:bg-zinc-800'
+                          : 'bg-white hover:bg-slate-50 border border-slate-200'
                       }`}
                   >
                     <span className="text-lg font-medium pr-8">{faq.question}</span>
@@ -228,7 +240,11 @@ const FaqPage = () => {
                         transition={{ duration: 0.3 }}
                         className="overflow-hidden"
                       >
-                        <div className="p-5 bg-zinc-800 text-gray-300 rounded-b-lg border-t border-zinc-700">
+                        <div className={`p-5 rounded-b-lg border-t ${
+                          isDark
+                            ? "bg-zinc-800 text-gray-300 border-zinc-700"
+                            : "bg-slate-50 text-slate-700 border-slate-200"
+                        }`}>
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -238,7 +254,7 @@ const FaqPage = () => {
               ))
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-400 text-lg">No questions found matching "{searchTerm}"</p>
+                <p className={`${isDark ? "text-gray-400" : "text-slate-600"} text-lg`}>No questions found matching "{searchTerm}"</p>
                 <button
                   onClick={() => setSearchTerm('')}
                   className="mt-4 text-[var(--primary)] hover:underline"
@@ -259,10 +275,10 @@ const FaqPage = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-zinc-800 p-10 rounded-2xl text-center"
+            className={`${isDark ? "bg-zinc-800 text-white" : "bg-slate-100 text-slate-900"} p-10 rounded-2xl text-center`}
           >
             <h2 className="text-3xl font-bold mb-4">Still have questions?</h2>
-            <p className="text-gray-400 mb-8 max-w-lg mx-auto">
+            <p className={`${isDark ? "text-gray-400" : "text-slate-600"} mb-8 max-w-lg mx-auto`}>
               Our team is always ready to help. Get in touch with us directly and we'll be happy to answer any specific questions you might have.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">

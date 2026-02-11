@@ -1,16 +1,21 @@
+"use client";
+
 import Footer from "./(components)/Footer";
 import Navbar from "./(components)/Navbar";
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { whatsappUrl } from "@/lib/contact";
+import { WebsiteThemeProvider, useWebsiteTheme } from "@/lib/website-theme";
 
-const WebsiteLayout = ({
+const WebsiteShell = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const { theme } = useWebsiteTheme();
+
   return (
-    <div>
+    <div className={theme === "dark" ? "bg-black text-white" : "bg-white text-slate-900"}>
       <Navbar />
       {children}
       <Footer />
@@ -25,6 +30,18 @@ const WebsiteLayout = ({
         <MessageCircle size={20} className="text-white" />
       </Link>
     </div>
+  );
+};
+
+const WebsiteLayout = ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => {
+  return (
+    <WebsiteThemeProvider>
+      <WebsiteShell>{children}</WebsiteShell>
+    </WebsiteThemeProvider>
   );
 };
 

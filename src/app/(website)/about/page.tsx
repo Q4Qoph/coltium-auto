@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui";
+import { useWebsiteTheme } from "@/lib/website-theme";
 
 export default function AboutPage() {
+  const { theme } = useWebsiteTheme();
+
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       <div className="pt-32 pb-20 px-6 container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/5">

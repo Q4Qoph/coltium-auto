@@ -54,7 +54,7 @@ const BrandsGrid = () => {
         </div>
         
         <div className="flex justify-center mt-12">
-          <button className="bg-yellow-400 hover:bg-yellow-500 transition-colors text-black px-8 py-3 rounded-sm">
+          <button className="bg-yellow-400 hover:bg-yellow-500 transition-colors text-black px-8 py-3 rounded-full">
             See All Brands
           </button>
         </div>

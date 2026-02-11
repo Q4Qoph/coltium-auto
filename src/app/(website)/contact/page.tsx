@@ -1,11 +1,16 @@
+"use client";
+
 import React from 'react';
 import { Mail, Phone, Clock, MapPin, Globe } from 'lucide-react';
 import { CONTACT, mailtoUrl, telUrl } from '@/lib/contact';
+import { useWebsiteTheme } from '@/lib/website-theme';
 
 export default function ContactPage() {
+  const { theme } = useWebsiteTheme();
+
   return (
-    <section className="min-h-screen bg-black text-white">
-      <div className="bg-gradient-to-b from-zinc-900 to-black pb-24">
+    <section className={theme === "dark" ? "min-h-screen bg-black text-white" : "min-h-screen bg-white text-slate-900"}>
+      <div className={theme === "dark" ? "bg-gradient-to-b from-zinc-900 to-black pb-24" : "pb-24"}>
         <div className="pt-32 px-6 container mx-auto">
           {/* Header Section */}
           <div className="flex flex-col md:flex-row">
@@ -39,7 +44,10 @@ export default function ContactPage() {
                     <Mail className="mr-4 shrink-0" size={24} />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                      <a href={mailtoUrl} className="text-gray-400 hover:text-white transition-colors">
+                      <a
+                        href={mailtoUrl}
+                        className={`${theme === "dark" ? "text-gray-400 hover:text-white" : "text-slate-700 hover:text-slate-900"} transition-colors`}
+                      >
                         {CONTACT.email}
                       </a>
                     </div>
@@ -52,7 +60,10 @@ export default function ContactPage() {
                     <Phone className="mr-4 shrink-0" size={24} />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                      <a href={telUrl} className="text-gray-400 hover:text-white transition-colors">
+                      <a
+                        href={telUrl}
+                        className={`${theme === "dark" ? "text-gray-400 hover:text-white" : "text-slate-700 hover:text-slate-900"} transition-colors`}
+                      >
                         {CONTACT.phone}
                       </a>
                     </div>
@@ -69,7 +80,7 @@ export default function ContactPage() {
                         href={CONTACT.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-white transition-colors"
+                        className={`${theme === "dark" ? "text-gray-400 hover:text-white" : "text-slate-700 hover:text-slate-900"} transition-colors`}
                       >
                         {CONTACT.website.replace(/^https?:\/\//, '')}
                       </a>
@@ -83,9 +94,9 @@ export default function ContactPage() {
                     <Clock className="mr-4 shrink-0" size={24} />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Opening Hours</h3>
-                      <p className="text-gray-400">Monday - Friday: 8:00 AM - 6:00 PM</p>
-                      <p className="text-gray-400">Saturday: 9:00 AM - 4:00 PM</p>
-                      <p className="text-gray-400">Sunday: Closed</p>
+                      <p className={theme === "dark" ? "text-gray-400" : "text-slate-600"}>Monday - Friday: 8:00 AM - 6:00 PM</p>
+                      <p className={theme === "dark" ? "text-gray-400" : "text-slate-600"}>Saturday: 9:00 AM - 4:00 PM</p>
+                      <p className={theme === "dark" ? "text-gray-400" : "text-slate-600"}>Sunday: Closed</p>
                     </div>
                   </div>
                 </div>
@@ -96,7 +107,7 @@ export default function ContactPage() {
                     <MapPin className="mr-4 shrink-0" size={24} />
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Our Location</h3>
-                      <p className="text-gray-400 leading-relaxed">
+                      <p className={theme === "dark" ? "text-gray-400 leading-relaxed" : "text-slate-700 leading-relaxed"}>
                         {CONTACT.address}
                       </p>
                     </div>

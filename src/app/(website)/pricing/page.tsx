@@ -6,6 +6,7 @@ import { Check, Loader2, Smartphone } from "lucide-react";
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Modal, Input, Label } from "@/components/ui";
 import { useSubscriptionPlans, useCreateSubscription, usePaymentStatus } from "@/lib/hooks";
 import { useOptionalAuth } from "@/lib/auth-context";
+import { useWebsiteTheme } from "@/lib/website-theme";
 import type { SubscriptionPlan } from "@/types";
 
 export default function PricingPage() {
@@ -65,21 +66,103 @@ export default function PricingPage() {
     }
   }, [paymentStatus?.payment?.status]);
 
+  const { theme } = useWebsiteTheme();
+
   if (isLoading) {
     return (
-      <div className="bg-black text-white min-h-screen">
-        <div className="pt-32 pb-20 px-6 container mx-auto max-w-5xl space-y-12">
-          <div className="space-y-3">
-            <div className="h-8 w-64 mx-auto rounded-md bg-slate-200 animate-pulse" />
-            <div className="h-4 w-96 mx-auto rounded-md bg-slate-100 animate-pulse" />
-          </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
+      <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
+        <div className="pt-32 pb-20 container mx-auto px-6">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Left label skeleton */}
+            <div className="md:w-1/5">
+              <div className="flex items-center mb-8">
+                <div className="w-10 h-px bg-[var(--primary)] mr-3" />
+                <div
+                  className={
+                    theme === "dark"
+                      ? "h-3 w-16 rounded bg-zinc-800 animate-pulse"
+                      : "h-3 w-16 rounded bg-slate-200 animate-pulse"
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Right content skeleton */}
+            <div className="md:w-4/5 space-y-8">
+              <div className="space-y-3">
+                <div
+                  className={
+                    theme === "dark"
+                      ? "h-9 w-64 rounded bg-zinc-800 animate-pulse"
+                      : "h-9 w-64 rounded bg-slate-200 animate-pulse"
+                  }
+                />
+                <div
+                  className={
+                    theme === "dark"
+                      ? "h-4 w-80 rounded bg-zinc-900 animate-pulse"
+                      : "h-4 w-80 rounded bg-slate-100 animate-pulse"
+                  }
+                />
+              </div>
+
+              <div className="grid gap-8 md:grid-cols-3">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={
+                      theme === "dark"
+                        ? "rounded-lg border border-zinc-800 bg-zinc-900 p-6 space-y-4 animate-pulse"
+                        : "rounded-lg border border-slate-200 bg-white p-6 space-y-4 animate-pulse"
+                    }
+                  >
+                    <div
+                      className={
+                        theme === "dark"
+                          ? "h-5 w-24 rounded bg-zinc-800"
+                          : "h-5 w-24 rounded bg-slate-200"
+                      }
+                    />
+                    <div
+                      className={
+                        theme === "dark"
+                          ? "h-4 w-32 rounded bg-zinc-800"
+                          : "h-4 w-32 rounded bg-slate-200"
+                      }
+                    />
+                    <div
+                      className={
+                        theme === "dark"
+                          ? "h-6 w-28 rounded bg-zinc-700"
+                          : "h-6 w-28 rounded bg-slate-300"
+                      }
+                    />
+                    <div
+                      className={
+                        theme === "dark"
+                          ? "h-3 w-20 rounded bg-zinc-800"
+                          : "h-3 w-20 rounded bg-slate-200"
+                      }
+                    />
+                    <div
+                      className={
+                        theme === "dark"
+                          ? "h-10 w-full rounded-full bg-zinc-800"
+                          : "h-10 w-full rounded-full bg-slate-200"
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+
               <div
-                key={i}
-                className="h-64 w-full rounded-lg bg-slate-100 border border-slate-100 animate-pulse"
+                className={
+                  theme === "dark"
+                    ? "h-3 w-80 rounded bg-zinc-900 animate-pulse"
+                    : "h-3 w-80 rounded bg-slate-100 animate-pulse"
+                }
               />
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +170,7 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="bg-black text-white min-h-screen">
+    <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       <div className="pt-32 pb-20 container mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left label column aligned with logo */}
