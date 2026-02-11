@@ -5,13 +5,16 @@ import { motion } from 'framer-motion';
 import { Shield, Sparkles, Droplet, Activity, ClipboardCheck, Users } from 'lucide-react';
 import Link from 'next/link';
 import { telUrl } from '@/lib/contact';
+import { useWebsiteTheme } from '@/lib/website-theme';
 
-const ServiceCard = ({ icon, title, description, bulletPoints }: any) => {
+const ServiceCard = ({ icon, title, description, bulletPoints, isDark }: any) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      className="bg-zinc-900 p-8 rounded-lg transition-all duration-300 h-full"
+      className={`p-8 rounded-lg transition-all duration-300 h-full ${
+        isDark ? "bg-zinc-900" : "bg-white border border-slate-200 text-slate-900"
+      }`}
       whileHover={{ y: -10 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -20,12 +23,12 @@ const ServiceCard = ({ icon, title, description, bulletPoints }: any) => {
         {icon}
       </div>
       <h3 className="text-2xl font-bold mb-4">{title}</h3>
-      <p className="text-gray-400 mb-6">{description}</p>
+      <p className={isDark ? "text-gray-400 mb-6" : "text-slate-600 mb-6"}>{description}</p>
       <ul className="space-y-2">
         {bulletPoints.map((point: string, index: number) => (
           <li key={index} className="flex items-start">
             <span className="text-[var(--primary)] mr-2">•</span>
-            <span className="text-gray-300">{point}</span>
+            <span className={isDark ? "text-gray-300" : "text-slate-700"}>{point}</span>
           </li>
         ))}
       </ul>
@@ -34,6 +37,8 @@ const ServiceCard = ({ icon, title, description, bulletPoints }: any) => {
 };
 
 const ServicesPage = () => {
+  const { theme } = useWebsiteTheme();
+  const isDark = theme === "dark";
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -54,9 +59,9 @@ const ServicesPage = () => {
   };
 
   return (
-    <div className="bg-black text-white min-h-screen ">
+    <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       {/* Hero Section */}
-      <section className="pt-32 bg-gradient-to-b from-zinc-900 to-black">
+      <section className={isDark ? "pt-32 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 bg-slate-100"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -79,7 +84,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Main Services (Use-Cases) */}
-      <section className="py-16 bg-zinc-950">
+      <section className={isDark ? "py-16 bg-zinc-950" : "py-16 bg-white"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -90,6 +95,7 @@ const ServicesPage = () => {
           >
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<Activity size={40} />}
                 title="On-Demand Diagnostic Assessment"
                 description="For vehicles showing warning lights, performance issues, or abnormal behaviour."
@@ -105,6 +111,7 @@ const ServicesPage = () => {
 
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<Shield size={40} />}
                 title="Preventive Vehicle Health Check"
                 description="For vehicles with no visible problems but requiring proactive oversight."
@@ -120,6 +127,7 @@ const ServicesPage = () => {
 
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<Sparkles size={40} />}
                 title="Second-Opinion Diagnostic Review"
                 description="For customers who have already received a garage quote or repair recommendation."
@@ -135,6 +143,7 @@ const ServicesPage = () => {
 
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<Droplet size={40} />}
                 title="Pre-Purchase Diagnostic Inspection"
                 description="For buyers or sellers of used vehicles needing a high-confidence, data-backed assessment."
@@ -150,6 +159,7 @@ const ServicesPage = () => {
 
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<ClipboardCheck size={40} />}
                 title="Insurance & Warranty Diagnostic Support"
                 description="Independent technical input for insurance and warranty-related questions and disputes."
@@ -165,6 +175,7 @@ const ServicesPage = () => {
 
             <motion.div variants={fadeIn}>
               <ServiceCard
+                isDark={isDark}
                 icon={<Users size={40} />}
                 title="Fleet Diagnostic Oversight"
                 description="For organisations managing multiple vehicles that need predictable uptime and technical oversight."
@@ -182,7 +193,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Access Model Section */}
-      <section className="py-16 border-t border-zinc-900">
+      <section className={isDark ? "py-16 border-t border-zinc-900" : "py-16 border-t border-slate-200"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -192,7 +203,7 @@ const ServicesPage = () => {
             className="mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Access model</h2>
-            <p className="text-gray-400 max-w-2xl">
+            <p className={isDark ? "text-gray-400 max-w-2xl" : "text-slate-600 max-w-2xl"}>
               Customers do not buy diagnostics per feature. You subscribe to access professional diagnostic oversight,
               and select the plan that matches how often and how deeply you need us involved.
             </p>
@@ -267,20 +278,20 @@ const ServicesPage = () => {
               Simple, transparent, and free from hidden incentives.
             </p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm text-gray-300">
-            <div className="border border-zinc-800 rounded-lg p-6 bg-zinc-950/40">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm">
+            <div className={isDark ? "border border-zinc-800 rounded-lg p-6 bg-zinc-950/40 text-gray-300" : "border border-slate-200 rounded-lg p-6 bg-white text-slate-700"}>
               <h3 className="font-semibold mb-2">1. Request or subscribe</h3>
               <p>Customer subscribes to a plan or requests a one-off diagnostic service.</p>
             </div>
-            <div className="border border-zinc-800 rounded-lg p-6 bg-zinc-950/40">
+            <div className={isDark ? "border border-zinc-800 rounded-lg p-6 bg-zinc-950/40 text-gray-300" : "border border-slate-200 rounded-lg p-6 bg-white text-slate-700"}>
               <h3 className="font-semibold mb-2">2. On-site diagnostics</h3>
               <p>Coltium-Auto contacts you, attends to the vehicle, and performs comprehensive diagnostics.</p>
             </div>
-            <div className="border border-zinc-800 rounded-lg p-6 bg-zinc-950/40">
+            <div className={isDark ? "border border-zinc-800 rounded-lg p-6 bg-zinc-950/40 text-gray-300" : "border border-slate-200 rounded-lg p-6 bg-white text-slate-700"}>
               <h3 className="font-semibold mb-2">3. Findings &amp; guidance</h3>
               <p>We deliver severity-ranked findings, root-cause analysis, and clear next-step recommendations.</p>
             </div>
-            <div className="border border-zinc-800 rounded-lg p-6 bg-zinc-950/40">
+            <div className={isDark ? "border border-zinc-800 rounded-lg p-6 bg-zinc-950/40 text-gray-300" : "border border-slate-200 rounded-lg p-6 bg-white text-slate-700"}>
               <h3 className="font-semibold mb-2">4. You decide</h3>
               <p>You choose how and where to proceed with repairs or claims, backed by independent technical facts.</p>
             </div>
@@ -289,7 +300,7 @@ const ServicesPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-zinc-950">
+      <section className={isDark ? "py-20 bg-zinc-950" : "py-20 bg-slate-100"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"

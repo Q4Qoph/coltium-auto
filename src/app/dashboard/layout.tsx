@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -26,9 +26,10 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading, logout } = useAuth();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || loggingOut) return;
     if (!user) {
       router.replace("/login?from=/dashboard");
       return;
@@ -37,7 +38,7 @@ export default function DashboardLayout({
       if (user.role === "technician") router.replace("/technician");
       else router.replace("/");
     }
-  }, [user, loading, router]);
+  }, [user, loading, loggingOut, router]);
 
   if (loading || !user) {
     return (
@@ -108,6 +109,7 @@ export default function DashboardLayout({
           )}
           <button
             onClick={() => {
+              setLoggingOut(true);
               logout();
               router.push("/");
             }}

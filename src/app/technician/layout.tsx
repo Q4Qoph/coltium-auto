@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ClipboardList, LayoutDashboard, LogOut } from "lucide-react";
@@ -13,9 +13,10 @@ export default function TechnicianLayout({
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading, logout } = useAuth();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   useEffect(() => {
-    if (loading) return;
+    if (loading || loggingOut) return;
     if (!user) {
       router.replace("/login?from=/technician");
       return;
@@ -24,7 +25,7 @@ export default function TechnicianLayout({
       if (user.role === "user") router.replace("/dashboard");
       else router.replace("/");
     }
-  }, [user, loading, router]);
+  }, [user, loading, loggingOut, router]);
 
   if (loading || !user) {
     return (
@@ -90,6 +91,7 @@ export default function TechnicianLayout({
           </p>
           <button
             onClick={() => {
+              setLoggingOut(true);
               logout();
               router.push("/");
             }}
