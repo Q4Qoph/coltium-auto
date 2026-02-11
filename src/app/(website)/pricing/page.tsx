@@ -67,9 +67,9 @@ export default function PricingPage() {
 
   if (isLoading) {
     return (
-      <div className="pt-32 pb-20 px-6">
-        <div className="container mx-auto max-w-5xl space-y-12">
-          <div className="text-center space-y-3">
+      <div className="bg-black text-white min-h-screen">
+        <div className="pt-32 pb-20 px-6 container mx-auto max-w-5xl space-y-12">
+          <div className="space-y-3">
             <div className="h-8 w-64 mx-auto rounded-md bg-slate-200 animate-pulse" />
             <div className="h-4 w-96 mx-auto rounded-md bg-slate-100 animate-pulse" />
           </div>
@@ -87,75 +87,98 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="pt-32 pb-20 px-6">
-      <div className="container mx-auto max-w-5xl">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Subscription plans</h1>
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto">
-            Pay with M-Pesa. Choose a plan and complete payment on your phone.
-          </p>
-        </div>
+    <div className="bg-black text-white min-h-screen">
+      <div className="pt-32 pb-20 container mx-auto px-6">
+        <div className="flex flex-col md:flex-row gap-8">
+          {/* Left label column aligned with logo */}
+          <div className="md:w-1/5">
+            <div className="flex items-center mb-8">
+              <div className="w-10 h-px bg-[var(--primary)] mr-3"></div>
+              <span className="text-sm uppercase tracking-wider">Pricing</span>
+            </div>
+          </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {displayPlans.map((plan) => (
-            <Card key={plan.id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle>{plan.name}</CardTitle>
-                <CardDescription>{plan.description}</CardDescription>
-                <div className="mt-4">
-                  {plan.priceMonthly === 0 ? (
-                    <span className="text-2xl font-bold">Pay per inspection</span>
-                  ) : (
-                    <>
-                      <span className="text-2xl font-bold">KES {Number(plan.priceMonthly).toLocaleString()}</span>
-                      <span className="text-zinc-500">/month</span>
-                      {plan.priceYearly != null && (
-                        <p className="text-sm text-zinc-500 mt-1">
-                          or KES {Number(plan.priceYearly).toLocaleString()}/year
-                        </p>
+          {/* Right content column slightly to the right */}
+          <div className="md:w-4/5">
+            <div className="mb-10">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                Subscription plans
+              </h1>
+              <p className="text-zinc-400 text-lg max-w-2xl">
+                Pay with M-Pesa. Choose a plan and complete payment on your phone.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-3">
+              {displayPlans.map((plan) => (
+                <Card key={plan.id} className="flex flex-col">
+                  <CardHeader>
+                    <CardTitle>{plan.name}</CardTitle>
+                    <CardDescription>{plan.description}</CardDescription>
+                    <div className="mt-4">
+                      {plan.priceMonthly === 0 ? (
+                        <span className="text-2xl font-bold">Pay per inspection</span>
+                      ) : (
+                        <>
+                          <span className="text-2xl font-bold">
+                            KES {Number(plan.priceMonthly).toLocaleString()}
+                          </span>
+                          <span className="text-zinc-500">/month</span>
+                          {plan.priceYearly != null && (
+                            <p className="text-sm text-zinc-500 mt-1">
+                              or KES {Number(plan.priceYearly).toLocaleString()}/year
+                            </p>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent className="flex-1 flex flex-col">
-                <ul className="space-y-3 mb-6">
-                  {plan.features.map((f, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-zinc-300">
-                      <Check className="h-4 w-4 text-[var(--primary)] shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto">
-                  {plan.priceMonthly === 0 ? (
-                    <Link href="/dashboard/inspections">
-                      <Button className="w-full" variant="outline">Request inspection</Button>
-                    </Link>
-                  ) : auth?.user ? (
-                    <Button
-                      className="w-full"
-                      variant={plan.slug === "pro" ? "primary" : "outline"}
-                      onClick={() => openSubscribeModal(plan)}
-                    >
-                      Subscribe with M-Pesa
-                    </Button>
-                  ) : (
-                    <Link href="/signup">
-                      <Button className="w-full" variant={plan.slug === "pro" ? "primary" : "outline"}>
-                        Sign up to subscribe
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col">
+                    <ul className="space-y-3 mb-6">
+                      {plan.features.map((f, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-zinc-300">
+                          <Check className="h-4 w-4 text-[var(--primary)] shrink-0" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto">
+                      {plan.priceMonthly === 0 ? (
+                        <Link href="/dashboard/inspections">
+                          <Button className="w-full" variant="outline">
+                            Request inspection
+                          </Button>
+                        </Link>
+                      ) : auth?.user ? (
+                        <Button
+                          className="w-full"
+                          variant={plan.slug === "pro" ? "primary" : "outline"}
+                          onClick={() => openSubscribeModal(plan)}
+                        >
+                          Subscribe with M-Pesa
+                        </Button>
+                      ) : (
+                        <Link href="/signup">
+                          <Button
+                            className="w-full"
+                            variant={plan.slug === "pro" ? "primary" : "outline"}
+                          >
+                            Sign up to subscribe
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
-        <p className="text-center text-zinc-500 text-sm mt-12">
-          Coltium-Auto does not repair vehicles or sell parts. Subscription grants access to diagnostic oversight and reports only. Payment via M-Pesa.
-        </p>
+            <p className="text-zinc-500 text-sm mt-12">
+              Coltium-Auto does not repair vehicles or sell parts. Subscription grants access to diagnostic
+              oversight and reports only. Payment via M-Pesa.
+            </p>
+          </div>
+        </div>
       </div>
 
       <Modal

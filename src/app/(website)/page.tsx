@@ -37,7 +37,7 @@ export default function Home() {
     return (
         <div className="bg-black text-white min-h-screen">
             {/* Hero Section */}
-            <section className="relative h-[60vh] sm:h-screen flex items-center">
+            <section className="relative h-[60vh] sm:h-screen flex items-center pt-24 md:pt-28">
                 <div className="absolute inset-0 overflow-hidden">
                     <Image
                         src="/1.png"
@@ -49,6 +49,8 @@ export default function Home() {
                     />
                     {/* Mirror overlay */}
                     <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 mix-blend-overlay pointer-events-none"></div>
+                    {/* Left text readability overlay */}
+                    <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black/80 via-black/60 to-transparent pointer-events-none" />
                 </div>
 
 
@@ -57,14 +59,13 @@ export default function Home() {
                         initial="hidden"
                         animate="visible"
                         variants={fadeInUp}
-                        className="max-w-2xl"
+                        className="max-w-3xl"
                     >
                         <p className="text-sm uppercase tracking-[0.25em] text-gray-300 mb-4">
                             Independent Mobile Vehicle Diagnostics
                         </p>
-                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                            Professional diagnosis.<br />
-                            No repair incentives.
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-snug max-w-2xl">
+                            Professional diagnosis, no repair incentives.
                         </h1>
                         <p className="text-gray-300 text-lg md:text-xl max-w-xl">
                             Coltium-Auto provides independent, on-site diagnostic oversight for modern vehicles —
@@ -72,7 +73,7 @@ export default function Home() {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <button
-                                onClick={goToWhatsapp}
+                                onClick={() => router.push('/login')}
                                 className="bg-[var(--primary)] transition-colors px-8 py-3 rounded-sm flex items-center gap-2"
                             >
                                 Book a diagnostic
@@ -112,7 +113,7 @@ export default function Home() {
                         <div className="md:w-1/5">
                             <div className="flex items-center mb-8">
                                 <div className="w-10 h-px bg-[var(--primary)] mr-3"></div>
-                                <span className="text-sm uppercase tracking-wider">ABOUT COLTIUM-AUTO</span>
+                                <span className="text-sm uppercase tracking-wider">ABOUT</span>
                             </div>
                         </div>
 

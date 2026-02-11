@@ -28,7 +28,7 @@ export default function TechnicianLayout({
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="space-y-2 w-full max-w-md px-6">
           <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
           <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
@@ -50,7 +50,7 @@ export default function TechnicianLayout({
   ] as const;
 
   return (
-    <div className="min-h-screen flex bg-[var(--background)] text-slate-900">
+    <div className="min-h-screen flex bg-white text-slate-900">
       <aside className="w-64 bg-white/95 border-r border-slate-200 flex flex-col">
         <div className="px-5 py-4 border-b border-slate-200">
           <Link href="/technician" className="inline-flex items-center gap-2">
@@ -100,7 +100,7 @@ export default function TechnicianLayout({
           </button>
         </div>
       </aside>
-      <main className="flex-1 p-6 overflow-auto bg-[var(--background)]">{children}</main>
+      <main className="flex-1 p-6 overflow-auto bg-white">{children}</main>
     </div>
   );
 }

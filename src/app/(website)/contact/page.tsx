@@ -27,68 +27,81 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Information Grid */}
-        <div className="pl-6 ml-[20%] grid grid-cols-1 md:grid-cols-2 gap-12 mb-10">
-          {/* Email */}
-          <div>
-            <div className="flex items-start">
-              <Mail className="mr-4 shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                <a href={mailtoUrl} className="text-gray-400 hover:text-white transition-colors">
-                  {CONTACT.email}
-                </a>
-              </div>
-            </div>
-          </div>
+        <div className="px-6 container mx-auto">
+          <div className="flex flex-col md:flex-row">
+            {/* Keep left gutter aligned with label column */}
+            <div className="md:w-1/5" />
+            <div className="md:w-4/5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-10">
+                {/* Email */}
+                <div>
+                  <div className="flex items-start">
+                    <Mail className="mr-4 shrink-0" size={24} />
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Email Us</h3>
+                      <a href={mailtoUrl} className="text-gray-400 hover:text-white transition-colors">
+                        {CONTACT.email}
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Phone */}
-          <div>
-            <div className="flex items-start">
-              <Phone className="mr-4 shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                <a href={telUrl} className="text-gray-400 hover:text-white transition-colors">
-                  {CONTACT.phone}
-                </a>
-              </div>
-            </div>
-          </div>
+                {/* Phone */}
+                <div>
+                  <div className="flex items-start">
+                    <Phone className="mr-4 shrink-0" size={24} />
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Call Us</h3>
+                      <a href={telUrl} className="text-gray-400 hover:text-white transition-colors">
+                        {CONTACT.phone}
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Website */}
-          <div>
-            <div className="flex items-start">
-              <Globe className="mr-4 shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Website</h3>
-                <a href={CONTACT.website} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                  {CONTACT.website.replace(/^https?:\/\//, '')}
-                </a>
-              </div>
-            </div>
-          </div>
+                {/* Website */}
+                <div>
+                  <div className="flex items-start">
+                    <Globe className="mr-4 shrink-0" size={24} />
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Website</h3>
+                      <a
+                        href={CONTACT.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
+                        {CONTACT.website.replace(/^https?:\/\//, '')}
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Hours */}
-          <div>
-            <div className="flex items-start mb-4">
-              <Clock className="mr-4 shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Opening Hours</h3>
-                <p className="text-gray-400">Monday - Friday: 8:00 AM - 6:00 PM</p>
-                <p className="text-gray-400">Saturday: 9:00 AM - 4:00 PM</p>
-                <p className="text-gray-400">Sunday: Closed</p>
-              </div>
-            </div>
-          </div>
+                {/* Hours */}
+                <div>
+                  <div className="flex items-start mb-4">
+                    <Clock className="mr-4 shrink-0" size={24} />
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Opening Hours</h3>
+                      <p className="text-gray-400">Monday - Friday: 8:00 AM - 6:00 PM</p>
+                      <p className="text-gray-400">Saturday: 9:00 AM - 4:00 PM</p>
+                      <p className="text-gray-400">Sunday: Closed</p>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Address */}
-          <div className="md:col-span-2">
-            <div className="flex items-start mb-6">
-              <MapPin className="mr-4 shrink-0" size={24} />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Our Location</h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {CONTACT.address}
-                </p>
+                {/* Address */}
+                <div className="md:col-span-2">
+                  <div className="flex items-start mb-6">
+                    <MapPin className="mr-4 shrink-0" size={24} />
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Our Location</h3>
+                      <p className="text-gray-400 leading-relaxed">
+                        {CONTACT.address}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
