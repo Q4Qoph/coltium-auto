@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { usersApi, techniciansApi } from "@/lib/api";
+import { usersApi, techniciansApi, adminPlansApi } from "@/lib/api";
+import { subscriptionKeys } from "./use-subscriptions";
 
 export const userKeys = {
   all: ["users"] as const,
@@ -11,6 +12,11 @@ export const userKeys = {
 export const technicianKeys = {
   all: ["technicians"] as const,
   list: () => [...technicianKeys.all, "list"] as const,
+};
+
+export const adminPlanKeys = {
+  all: ["admin", "plans"] as const,
+  list: () => [...adminPlanKeys.all, "list"] as const,
 };
 
 export function useUsers(params?: { page?: number; limit?: number; role?: string }) {
@@ -34,6 +40,37 @@ export function useCreateTechnician() {
       techniciansApi.create(body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: technicianKeys.all });
+    },
+  });
+}
+
+export function useAdminPlans() {
+  return useQuery({
+    queryKey: adminPlanKeys.list(),
+    queryFn: () => adminPlansApi.list(),
+  });
+}
+
+export function useCreatePlan() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (body: Parameters<typeof adminPlansApi.create>[0]) =>
+      adminPlansApi.create(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: adminPlanKeys.all });
+      queryClient.invalidateQueries({ queryKey: subscriptionKeys.plans() });
+    },
+  });
+}
+
+export function useUpdatePlan() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, body }: { id: string; body: Parameters<typeof adminPlansApi.update>[1] }) =>
+      adminPlansApi.update(id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: adminPlanKeys.all });
+      queryClient.invalidateQueries({ queryKey: subscriptionKeys.plans() });
     },
   });
 }

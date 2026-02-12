@@ -165,3 +165,22 @@ export const adminPaymentsApi = {
   createManual: (body: { userId: string; subscriptionId?: string; amount: number; status?: string; reference?: string }) =>
     request<PaymentRow>("/admin/payments", { method: "POST", body: JSON.stringify(body) }),
 };
+
+// —— Admin: plans ——
+export type AdminPlanPayload = {
+  name: string;
+  slug: string;
+  description?: string;
+  priceMonthly: number;
+  priceYearly?: number;
+  features?: string[];
+  inspectionLimit?: number | null;
+};
+
+export const adminPlansApi = {
+  list: () => request<SubscriptionPlan[]>("/admin/plans"),
+  create: (body: AdminPlanPayload) =>
+    request<SubscriptionPlan>("/admin/plans", { method: "POST", body: JSON.stringify(body) }),
+  update: (id: string, body: Partial<AdminPlanPayload>) =>
+    request<SubscriptionPlan>(`/admin/plans/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+};

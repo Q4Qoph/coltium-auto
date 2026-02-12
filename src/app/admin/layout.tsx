@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, ClipboardList, FileText, CreditCard, Repeat, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardList, FileText, CreditCard, Repeat, Package, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/technicians", label: "Technicians", icon: Users },
+  { href: "/admin/plans", label: "Plans", icon: Package },
   { href: "/admin/subscriptions", label: "Subscriptions", icon: Repeat },
   { href: "/admin/payments", label: "Payments", icon: CreditCard },
   { href: "/admin/inspections", label: "Inspections", icon: ClipboardList },

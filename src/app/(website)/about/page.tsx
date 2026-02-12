@@ -14,7 +14,7 @@ export default function AboutPage() {
           <div className="md:w-1/5">
             <div className="flex items-center mb-8">
               <div className="w-10 h-px bg-[var(--primary)] mr-3"></div>
-              <span className="text-sm uppercase tracking-wider">About</span>
+              <span className={`text-sm uppercase tracking-wider ${theme === "dark" ? "text-gray-400" : "text-slate-500"}`}>About</span>
             </div>
           </div>
 
@@ -22,7 +22,7 @@ export default function AboutPage() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Independent vehicle diagnostic oversight — like a medical diagnostic practice, but for cars.
             </h1>
-            <div className="space-y-4 text-zinc-300 mb-10">
+            <div className={`space-y-4 mb-10 ${theme === "dark" ? "text-zinc-300" : "text-slate-600"}`}>
               <p>
                 Modern vehicles are complex systems of software, electronics, sensors, and mechanical components.
                 In this environment, rushed diagnosis and guesswork are common — and parts are often replaced

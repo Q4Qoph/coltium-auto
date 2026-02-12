@@ -22,8 +22,9 @@ export default function PricingPage() {
 
   const planList = Array.isArray(plans) ? plans : [];
   const displayPlans = planList.length > 0 ? planList : [
-    { id: "starter", name: "Starter", slug: "starter", description: "Basic inspections", priceMonthly: 19.99, priceYearly: 199.99, features: ["5 inspections/year", "Basic report"], inspectionLimit: 5 },
-    { id: "pro", name: "Pro", slug: "pro", description: "Full diagnostic oversight", priceMonthly: 39.99, priceYearly: 399.99, features: ["Unlimited inspections", "Full diagnostic report", "Priority support"], inspectionLimit: undefined },
+    { id: "standard", name: "Personal Vehicle Health Plan – Standard", slug: "standard", description: "For private vehicle owners who want preventive monitoring.", priceMonthly: 1400, priceYearly: 14000, features: ["One preventive diagnostic every 6 months", "10% discount on additional on-demand visits", "Priority booking", "Digital service history access"] },
+    { id: "plus", name: "Personal Vehicle Health Plan – Plus", slug: "plus", description: "Enhanced preventive monitoring with second-opinion support.", priceMonthly: 2000, priceYearly: 20000, features: ["One preventive diagnostic every 4 months", "15% discount on additional visits", "Second-opinion support included", "Priority scheduling", "Digital service history"] },
+    { id: "premium", name: "Personal Vehicle Health Plan – Premium", slug: "premium", description: "Highest tier with insurance and warranty diagnostic eligibility.", priceMonthly: 2800, priceYearly: 28000, features: ["One preventive diagnostic every 3 months", "20% discount on additional visits", "Insurance and warranty diagnostic eligibility", "Highest priority scheduling", "Dedicated advisory support", "Digital service history"] },
   ] as SubscriptionPlan[];
 
   const openSubscribeModal = (plan: SubscriptionPlan) => {
@@ -224,7 +225,7 @@ export default function PricingPage() {
                       ) : auth?.user ? (
                         <Button
                           className="w-full"
-                          variant={plan.slug === "pro" ? "primary" : "outline"}
+                          variant={plan.slug === "plus" ? "primary" : "outline"}
                           onClick={() => openSubscribeModal(plan)}
                         >
                           Request subscription
@@ -233,7 +234,7 @@ export default function PricingPage() {
                         <Link href="/signup">
                           <Button
                             className="w-full"
-                            variant={plan.slug === "pro" ? "primary" : "outline"}
+                            variant={plan.slug === "plus" ? "primary" : "outline"}
                           >
                             Sign up to subscribe
                           </Button>
