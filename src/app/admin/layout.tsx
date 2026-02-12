@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Users, ClipboardList, FileText, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, ClipboardList, FileText, CreditCard, Repeat, LogOut } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,8 @@ const nav = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/technicians", label: "Technicians", icon: Users },
+  { href: "/admin/subscriptions", label: "Subscriptions", icon: Repeat },
+  { href: "/admin/payments", label: "Payments", icon: CreditCard },
   { href: "/admin/inspections", label: "Inspections", icon: ClipboardList },
   { href: "/admin/reports", label: "Reports", icon: FileText },
 ];
@@ -22,17 +24,24 @@ export default function AdminLayout({
   const router = useRouter();
   const { user, loading, logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
 
   useEffect(() => {
     if (loading || loggingOut) return;
+    const currentPath = pathnameRef.current;
     if (!user) {
-      router.replace("/login?from=/admin");
+      if (!currentPath.startsWith("/login")) {
+        router.replace(`/login?from=${encodeURIComponent(currentPath)}`);
+      }
       return;
     }
     if (user.role !== "admin") {
-      if (user.role === "technician") router.replace("/technician");
-      else if (user.role === "user") router.replace("/dashboard");
-      else router.replace("/");
+      const target =
+        user.role === "technician" ? "/technician" : user.role === "user" ? "/dashboard" : "/";
+      if (!currentPath.startsWith(target)) {
+        router.replace(target);
+      }
     }
   }, [user, loading, loggingOut, router]);
 
@@ -95,9 +104,10 @@ export default function AdminLayout({
             {user.email}
           </p>
           <button
-            onClick={() => {
+            type="button"
+            onClick={async () => {
               setLoggingOut(true);
-              logout();
+              await logout();
               router.push("/");
             }}
             className="flex w-full items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"

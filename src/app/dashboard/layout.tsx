@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -8,6 +8,7 @@ import {
   Car,
   ClipboardList,
   FileText,
+  CreditCard,
   LogOut,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
@@ -18,6 +19,7 @@ const nav = [
   { href: "/dashboard/vehicles", label: "Vehicles", icon: Car },
   { href: "/dashboard/inspections", label: "Inspections", icon: ClipboardList },
   { href: "/dashboard/reports", label: "Reports", icon: FileText },
+  { href: "/dashboard/payments", label: "Payments", icon: CreditCard },
 ];
 
 export default function DashboardLayout({
@@ -27,16 +29,23 @@ export default function DashboardLayout({
   const router = useRouter();
   const { user, loading, logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
 
   useEffect(() => {
     if (loading || loggingOut) return;
+    const currentPath = pathnameRef.current;
     if (!user) {
-      router.replace("/login?from=/dashboard");
+      if (!currentPath.startsWith("/login")) {
+        router.replace(`/login?from=${encodeURIComponent(currentPath)}`);
+      }
       return;
     }
     if (user.role !== "user" && user.role !== "admin") {
-      if (user.role === "technician") router.replace("/technician");
-      else router.replace("/");
+      const target = user.role === "technician" ? "/technician" : "/";
+      if (!currentPath.startsWith(target)) {
+        router.replace(target);
+      }
     }
   }, [user, loading, loggingOut, router]);
 
@@ -108,9 +117,10 @@ export default function DashboardLayout({
             </Link>
           )}
           <button
-            onClick={() => {
+            type="button"
+            onClick={async () => {
               setLoggingOut(true);
-              logout();
+              await logout();
               router.push("/");
             }}
             className="flex w-full items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"

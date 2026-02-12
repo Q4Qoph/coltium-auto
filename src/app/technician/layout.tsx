@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ClipboardList, LayoutDashboard, LogOut } from "lucide-react";
@@ -14,16 +14,23 @@ export default function TechnicianLayout({
   const router = useRouter();
   const { user, loading, logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
+  const pathnameRef = useRef(pathname);
+  pathnameRef.current = pathname;
 
   useEffect(() => {
     if (loading || loggingOut) return;
+    const currentPath = pathnameRef.current;
     if (!user) {
-      router.replace("/login?from=/technician");
+      if (!currentPath.startsWith("/login")) {
+        router.replace(`/login?from=${encodeURIComponent(currentPath)}`);
+      }
       return;
     }
     if (user.role !== "technician" && user.role !== "admin") {
-      if (user.role === "user") router.replace("/dashboard");
-      else router.replace("/");
+      const target = user.role === "user" ? "/dashboard" : "/";
+      if (!currentPath.startsWith(target)) {
+        router.replace(target);
+      }
     }
   }, [user, loading, loggingOut, router]);
 
@@ -90,9 +97,10 @@ export default function TechnicianLayout({
             {user.email}
           </p>
           <button
-            onClick={() => {
+            type="button"
+            onClick={async () => {
               setLoggingOut(true);
-              logout();
+              await logout();
               router.push("/");
             }}
             className="flex w-full items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-600 hover:bg-slate-100 hover:text-slate-900"

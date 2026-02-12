@@ -1,25 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { Check, Loader2, Smartphone } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Check } from "lucide-react";
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent, Modal, Input, Label } from "@/components/ui";
-import { useSubscriptionPlans, useCreateSubscription, usePaymentStatus } from "@/lib/hooks";
+import { useSubscriptionPlans, useCreateSubscription } from "@/lib/hooks";
 import { useOptionalAuth } from "@/lib/auth-context";
 import { useWebsiteTheme } from "@/lib/website-theme";
 import type { SubscriptionPlan } from "@/types";
 
 export default function PricingPage() {
   const auth = useOptionalAuth();
+  const router = useRouter();
   const { data: plans = [], isLoading } = useSubscriptionPlans();
   const createSubscription = useCreateSubscription();
   const [subscribePlan, setSubscribePlan] = useState<SubscriptionPlan | null>(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [interval, setInterval] = useState<"monthly" | "yearly">("monthly");
-  const [pendingPayment, setPendingPayment] = useState<{ checkoutRequestId: string; customerMessage: string } | null>(null);
   const [error, setError] = useState("");
-
-  const { data: paymentStatus, isSuccess: paymentCompleted } = usePaymentStatus(pendingPayment?.checkoutRequestId ?? null);
 
   const planList = Array.isArray(plans) ? plans : [];
   const displayPlans = planList.length > 0 ? planList : [
@@ -31,13 +30,11 @@ export default function PricingPage() {
     setSubscribePlan(plan);
     setPhoneNumber(auth?.user?.phone ?? "");
     setInterval("monthly");
-    setPendingPayment(null);
     setError("");
   };
 
   const closeModal = () => {
     setSubscribePlan(null);
-    setPendingPayment(null);
     setError("");
   };
 
@@ -46,25 +43,17 @@ export default function PricingPage() {
     if (!subscribePlan) return;
     setError("");
     try {
-      const res = await createSubscription.mutateAsync({
+      await createSubscription.mutateAsync({
         planId: subscribePlan.id,
         interval,
         phoneNumber: phoneNumber.trim(),
       });
-      setPendingPayment({
-        checkoutRequestId: res.payment.checkoutRequestId,
-        customerMessage: res.payment.customerMessage,
-      });
+      closeModal();
+      router.push("/pricing/confirmation");
     } catch (err: unknown) {
       setError((err as { message?: string })?.message ?? "Failed to start payment");
     }
   };
-
-  useEffect(() => {
-    if (paymentStatus?.payment?.status === "completed") {
-      closeModal();
-    }
-  }, [paymentStatus?.payment?.status]);
 
   const { theme } = useWebsiteTheme();
 
@@ -188,7 +177,7 @@ export default function PricingPage() {
                 Subscription plans
               </h1>
               <p className="text-zinc-400 text-lg max-w-2xl">
-                Pay with M-Pesa. Choose a plan and complete payment on your phone.
+                Choose a plan and submit a subscription request. Our technical team will contact you to arrange payment and activation.
               </p>
             </div>
 
@@ -238,7 +227,7 @@ export default function PricingPage() {
                           variant={plan.slug === "pro" ? "primary" : "outline"}
                           onClick={() => openSubscribeModal(plan)}
                         >
-                          Subscribe with M-Pesa
+                          Request subscription
                         </Button>
                       ) : (
                         <Link href="/signup">
@@ -258,7 +247,7 @@ export default function PricingPage() {
 
             <p className="text-zinc-500 text-sm mt-12">
               Coltium-Auto does not repair vehicles or sell parts. Subscription grants access to diagnostic
-              oversight and reports only. Payment via M-Pesa.
+              oversight and reports only. Payment is arranged separately with our team (typically via M-Pesa).
             </p>
           </div>
         </div>
@@ -267,7 +256,7 @@ export default function PricingPage() {
       <Modal
         open={!!subscribePlan}
         onClose={closeModal}
-        title="Subscribe with M-Pesa"
+        title="Request subscription"
         description={subscribePlan ? `${subscribePlan.name} plan` : undefined}
       >
         {subscribePlan && (
@@ -298,7 +287,7 @@ export default function PricingPage() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">M-Pesa phone number</Label>
+                  <Label htmlFor="phone">Contact phone number</Label>
                   <Input
                     id="phone"
                     type="tel"
@@ -317,7 +306,7 @@ export default function PricingPage() {
                   loading={createSubscription.isPending}
                   disabled={!phoneNumber.trim()}
                 >
-                  Send payment request to phone
+                  Submit subscription request
                 </Button>
               </form>
             ) : (
