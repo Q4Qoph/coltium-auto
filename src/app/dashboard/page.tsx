@@ -120,14 +120,14 @@ export default function DashboardPage() {
             <p className="text-3xl font-bold text-slate-900">
               {subscription
                 ? (subscription as { status?: string }).status === "pending"
-                  ? "Payment pending"
+                  ? "Pending activation"
                   : (subscription as { plan?: { name?: string } }).plan?.name ?? "Active"
                 : "None"}
             </p>
             <Link href="/pricing" className="text-sm text-[var(--primary)] hover:underline">
               {subscription
                 ? (subscription as { status?: string }).status === "pending"
-                  ? "Complete payment"
+                  ? "View options"
                   : "Manage"
                 : "Subscribe"}
             </Link>

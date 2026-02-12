@@ -35,15 +35,49 @@ export interface Subscription {
   createdAt: string;
 }
 
-/** Response when creating a subscription (M-Pesa STK push initiated) */
+export interface PaymentSummary {
+  id: string;
+  amount: number;
+  status: "pending" | "completed" | "failed";
+  createdAt: string;
+}
+
+/** Payment as returned to user (mine) or admin (list) */
+export interface PaymentRow {
+  id: string;
+  userId: string;
+  subscriptionId?: string;
+  amount: number;
+  method: "mpesa" | "manual";
+  status: "pending" | "completed" | "failed";
+  reference?: string;
+  createdAt: string;
+  subscription?: {
+    id: string;
+    status: Subscription["status"];
+    plan?: { id: string; name: string };
+  };
+  user?: Pick<User, "id" | "email" | "name">;
+}
+
+export interface AdminSubscriptionSummary {
+  id: string;
+  user?: Pick<User, "id" | "email" | "name">;
+  plan?: Pick<SubscriptionPlan, "id" | "name">;
+  status: Subscription["status"];
+  currentPeriodEnd: string;
+  latestPayment: PaymentSummary | null;
+}
+
+/** Response when creating a subscription */
 export interface SubscriptionCreateResponse {
   subscription: Subscription;
-  payment: {
+  payment?: {
     id: string;
     status: string;
     amount: number;
-    checkoutRequestId: string;
-    customerMessage: string;
+    checkoutRequestId?: string;
+    customerMessage?: string;
   };
 }
 

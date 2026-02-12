@@ -11,6 +11,7 @@ import type {
   Subscription,
   SubscriptionPlan,
   SubscriptionCreateResponse,
+  PaymentRow,
   AuthResponse,
   LoginRequest,
   SignupRequest,
@@ -132,15 +133,54 @@ export const subscriptionsApi = {
     request<Subscription>(`/subscriptions/${id}/cancel`, { method: "POST" }),
 };
 
-// —— Payments (M-Pesa status polling) ——
+// —— Payments ——
 export const paymentsApi = {
+  mine: () => request<PaymentRow[]>("/payments/mine"),
   getStatus: (checkoutRequestId: string) =>
     request<{ payment: { id: string; status: string }; mpesaStatus?: unknown }>(`/payments/status/${checkoutRequestId}`),
 };
 
-// —— Technicians (admin) ——
+// —— Admin: technicians ——
 export const techniciansApi = {
   list: () => request<User[]>("/admin/technicians"),
   create: (body: SignupRequest) =>
     request<User>("/admin/technicians", { method: "POST", body: JSON.stringify(body) }),
+};
+
+// —— Admin: subscriptions ——
+import type { AdminSubscriptionSummary } from "@/types";
+
+export const adminSubscriptionsApi = {
+  list: () => request<AdminSubscriptionSummary[]>("/admin/subscriptions"),
+  updateStatus: (id: string, status: Subscription["status"]) =>
+    request<AdminSubscriptionSummary>(`/admin/subscriptions/${id}/status`, {
+      method: "PATCH",
+      body: JSON.stringify({ status }),
+    }),
+};
+
+// —— Admin: payments ——
+export const adminPaymentsApi = {
+  list: () => request<PaymentRow[]>("/admin/payments"),
+  createManual: (body: { userId: string; subscriptionId?: string; amount: number; status?: string; reference?: string }) =>
+    request<PaymentRow>("/admin/payments", { method: "POST", body: JSON.stringify(body) }),
+};
+
+// —— Admin: plans ——
+export type AdminPlanPayload = {
+  name: string;
+  slug: string;
+  description?: string;
+  priceMonthly: number;
+  priceYearly?: number;
+  features?: string[];
+  inspectionLimit?: number | null;
+};
+
+export const adminPlansApi = {
+  list: () => request<SubscriptionPlan[]>("/admin/plans"),
+  create: (body: AdminPlanPayload) =>
+    request<SubscriptionPlan>("/admin/plans", { method: "POST", body: JSON.stringify(body) }),
+  update: (id: string, body: Partial<AdminPlanPayload>) =>
+    request<SubscriptionPlan>(`/admin/plans/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
 };

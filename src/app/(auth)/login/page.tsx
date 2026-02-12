@@ -23,16 +23,14 @@ function LoginForm() {
     try {
       const res = await login(email, password);
 
-      // Route primarily by role so admins/technicians always land
-      // in their dashboards, regardless of previous ?from=
+      // Send user to the page they wanted, or role default, if "from" is in their area
       let target: string;
       if (res.user.role === "admin") {
-        target = "/admin";
+        target = from?.startsWith("/admin") ? from : "/admin";
       } else if (res.user.role === "technician") {
-        target = "/technician";
+        target = from?.startsWith("/technician") ? from : "/technician";
       } else {
-        // Normal user can be sent back to where they came from
-        target = from || "/dashboard";
+        target = from?.startsWith("/dashboard") ? from : (from || "/dashboard");
       }
 
       router.push(target);

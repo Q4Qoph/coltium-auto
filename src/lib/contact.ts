@@ -5,9 +5,9 @@ export const CONTACT = {
   address: "15164-00509, Langata Hardy, Nairobi",
   email: "contact@intl-coltium.com",
   website: "https://www.intl-coltium.com",
-  phone: "+1 (758) 486-9802",
+  phone: "+254 762 858881",
   /** E.164 for tel: and wa.me (no + or spaces) */
-  phoneE164: "17584869802",
+  phoneE164: "254762858881",
 } as const;
 
 export const whatsappUrl = `https://wa.me/${CONTACT.phoneE164}`;
