@@ -130,7 +130,7 @@ const ServicesPage = () => {
   return (
     <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       {/* Hero Section */}
-      <section className={isDark ? " pb-12 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 pb-10 bg-slate-100"}>
+      <section className={isDark ? "pt-32 pb-12 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 pb-10 bg-slate-100"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
