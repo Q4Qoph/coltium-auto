@@ -261,76 +261,53 @@ export default function PricingPage() {
         description={subscribePlan ? `${subscribePlan.name} plan` : undefined}
       >
         {subscribePlan && (
-          <div className="space-y-4">
-            {!pendingPayment ? (
-              <form onSubmit={handleSubscribe} className="space-y-4">
-                <div>
-                  <Label>Billing</Label>
-                  <div className="flex gap-2 mt-2">
-                    <Button
-                      type="button"
-                      variant={interval === "monthly" ? "primary" : "outline"}
-                      size="sm"
-                      onClick={() => setInterval("monthly")}
-                    >
-                      Monthly (KES {Number(subscribePlan.priceMonthly).toLocaleString()})
-                    </Button>
-                    {subscribePlan.priceYearly != null && (
-                      <Button
-                        type="button"
-                        variant={interval === "yearly" ? "primary" : "outline"}
-                        size="sm"
-                        onClick={() => setInterval("yearly")}
-                      >
-                        Yearly (KES {Number(subscribePlan.priceYearly).toLocaleString()})
-                      </Button>
-                    )}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Contact phone number</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="07XX XXX XXX or 2547XX XXX XXX"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    required
-                  />
-                </div>
-                {error && (
-                  <p className="text-sm text-red-500">{error}</p>
-                )}
+          <form onSubmit={handleSubscribe} className="space-y-4">
+            <div>
+              <Label>Billing</Label>
+              <div className="flex gap-2 mt-2">
                 <Button
-                  type="submit"
-                  className="w-full"
-                  loading={createSubscription.isPending}
-                  disabled={!phoneNumber.trim()}
+                  type="button"
+                  variant={interval === "monthly" ? "primary" : "outline"}
+                  size="sm"
+                  onClick={() => setInterval("monthly")}
                 >
-                  Submit subscription request
+                  Monthly (KES {Number(subscribePlan.priceMonthly).toLocaleString()})
                 </Button>
-              </form>
-            ) : (
-              <div className="space-y-4 text-center py-4">
-                <div className="flex justify-center">
-                  <Smartphone className="h-12 w-12 text-[var(--primary)]" />
-                </div>
-                <p className="text-zinc-300">{pendingPayment.customerMessage}</p>
-                <p className="text-sm text-zinc-500">
-                  Enter your M-Pesa PIN on your phone to complete payment. This window will update automatically.
-                </p>
-                {paymentStatus?.payment?.status === "completed" && (
-                  <p className="text-green-500 font-medium">Payment successful. Your subscription is active.</p>
+                {subscribePlan.priceYearly != null && (
+                  <Button
+                    type="button"
+                    variant={interval === "yearly" ? "primary" : "outline"}
+                    size="sm"
+                    onClick={() => setInterval("yearly")}
+                  >
+                    Yearly (KES {Number(subscribePlan.priceYearly).toLocaleString()})
+                  </Button>
                 )}
-                {paymentStatus?.payment?.status === "failed" && (
-                  <p className="text-red-500">Payment failed. Please try again or use a different number.</p>
-                )}
-                <div className="flex justify-center">
-                  <Loader2 className="h-6 w-6 animate-pulse text-[var(--primary)]" />
-                </div>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Contact phone number</Label>
+              <Input
+                id="phone"
+                type="tel"
+                placeholder="07XX XXX XXX or 2547XX XXX XXX"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
+              />
+            </div>
+            {error && (
+              <p className="text-sm text-red-500">{error}</p>
             )}
-          </div>
+            <Button
+              type="submit"
+              className="w-full"
+              loading={createSubscription.isPending}
+              disabled={!phoneNumber.trim()}
+            >
+              Submit subscription request
+            </Button>
+          </form>
         )}
       </Modal>
     </div>

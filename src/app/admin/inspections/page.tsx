@@ -21,6 +21,20 @@ import {
 } from "@/components/ui";
 import { useInspections, useTechnicians, useAssignInspection } from "@/lib/hooks";
 import { formatDate, inspectionStatusLabel } from "@/lib/utils";
+import type { ServiceType } from "@/types";
+
+function serviceTypeLabel(st?: ServiceType | null): string {
+  if (!st) return "—";
+  const labels: Record<ServiceType, string> = {
+    on_demand: "On-demand",
+    preventive: "Preventive",
+    second_opinion: "Second opinion",
+    pre_purchase: "Pre-purchase",
+    insurance: "Insurance",
+    fleet: "Fleet",
+  };
+  return labels[st] ?? st;
+}
 
 export default function AdminInspectionsPage() {
   const { data: inspections = [], isLoading: inspectionsLoading } = useInspections();
@@ -55,9 +69,11 @@ export default function AdminInspectionsPage() {
     const term = search.toLowerCase();
     const matchesSearch =
       !term ||
-      inv.vehicle?.make?.toLowerCase().includes(term) ||
-      inv.vehicle?.model?.toLowerCase().includes(term) ||
-      inv.vehicle?.registrationNumber?.toLowerCase().includes(term);
+      inv.user?.name?.toLowerCase().includes(term) ||
+      inv.user?.email?.toLowerCase().includes(term) ||
+      inv.user?.phone?.toLowerCase().includes(term) ||
+      serviceTypeLabel(inv.serviceType).toLowerCase().includes(term) ||
+      (inv.notes?.toLowerCase().includes(term) ?? false);
     const matchesStatus = !statusFilter || inv.status === statusFilter;
     const matchesTech = !techFilter || inv.technician?.id === techFilter;
     return matchesSearch && matchesStatus && matchesTech;
@@ -86,7 +102,8 @@ export default function AdminInspectionsPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Vehicle</TableHead>
+            <TableHead>Service</TableHead>
+            <TableHead>Requested by</TableHead>
             <TableHead>Requested</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Technician</TableHead>
@@ -96,8 +113,23 @@ export default function AdminInspectionsPage() {
         <TableBody>
           {filtered.map((inv) => (
             <TableRow key={inv.id}>
+              <TableCell className="font-medium">{serviceTypeLabel(inv.serviceType)}</TableCell>
               <TableCell>
-                {inv.vehicle?.make} {inv.vehicle?.model} ({inv.vehicle?.year})
+                {inv.user ? (
+                  <div className="text-sm">
+                    <div className="font-medium">{inv.user.name}</div>
+                    <a href={`mailto:${inv.user.email}`} className="text-[var(--primary)] hover:underline">
+                      {inv.user.email}
+                    </a>
+                    {inv.user.phone && (
+                      <div className="text-slate-500">
+                        <a href={`tel:${inv.user.phone}`} className="hover:underline">{inv.user.phone}</a>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  "—"
+                )}
               </TableCell>
               <TableCell>{formatDate(inv.requestedAt)}</TableCell>
               <TableCell>
@@ -141,14 +173,14 @@ export default function AdminInspectionsPage() {
             <div>
               <CardTitle>All inspections</CardTitle>
               <p className="text-sm text-slate-500 mt-1">
-                Search by vehicle and filter by status or technician.
+                Search by requester name, email, phone, service or notes; filter by status or technician.
               </p>
             </div>
             <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
               <div className="flex-1 space-y-1">
                 <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
                 <Input
-                  placeholder="Search by vehicle..."
+                  placeholder="Search by requester, service or notes..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />

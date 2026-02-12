@@ -100,11 +100,31 @@ export interface Vehicle {
 
 export type InspectionStatus = "pending" | "assigned" | "in_progress" | "completed" | "cancelled";
 
+/** Matches backend. Only 'preventive' requires an active subscription. */
+export type ServiceType =
+  | "on_demand"
+  | "preventive"
+  | "second_opinion"
+  | "pre_purchase"
+  | "insurance"
+  | "fleet";
+
+/** Requester (customer) contact info for admin/technician to reach them */
+export interface InspectionRequester {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+}
+
 export interface Inspection {
   id: string;
   userId: string;
-  vehicleId: string;
+  vehicleId?: string | null;
+  serviceType?: ServiceType;
   vehicle?: Vehicle;
+  /** Requester (customer) — for admin/technician contact */
+  user?: InspectionRequester;
   technicianId?: string;
   technician?: User;
   status: InspectionStatus;

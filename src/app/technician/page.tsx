@@ -48,9 +48,10 @@ export default function TechnicianDashboardPage() {
     const term = search.toLowerCase();
     const matchesSearch =
       !term ||
-      inv.vehicle?.make?.toLowerCase().includes(term) ||
-      inv.vehicle?.model?.toLowerCase().includes(term) ||
-      inv.vehicle?.registrationNumber?.toLowerCase().includes(term);
+      inv.user?.name?.toLowerCase().includes(term) ||
+      inv.user?.email?.toLowerCase().includes(term) ||
+      inv.user?.phone?.toLowerCase().includes(term) ||
+      (inv.notes?.toLowerCase().includes(term) ?? false);
     const matchesStatus = !statusFilter || inv.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -165,7 +166,7 @@ export default function TechnicianDashboardPage() {
               <div className="flex-1 space-y-1">
                 <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
                 <Input
-                  placeholder="Search by vehicle..."
+                  placeholder="Search by requester name, email, phone or notes..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -193,7 +194,7 @@ export default function TechnicianDashboardPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Vehicle</TableHead>
+                  <TableHead>Requested by</TableHead>
                   <TableHead>Requested</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -203,9 +204,21 @@ export default function TechnicianDashboardPage() {
                 {assigned.map((inv) => (
                   <TableRow key={inv.id}>
                     <TableCell>
-                      <div className="font-medium">
-                        {inv.vehicle?.make} {inv.vehicle?.model} ({inv.vehicle?.year})
-                      </div>
+                      {inv.user ? (
+                        <div className="text-sm">
+                          <div className="font-medium">{inv.user.name}</div>
+                          <a href={`mailto:${inv.user.email}`} className="text-[var(--primary)] hover:underline">
+                            {inv.user.email}
+                          </a>
+                          {inv.user.phone && (
+                            <div className="text-slate-500">
+                              <a href={`tel:${inv.user.phone}`} className="hover:underline">{inv.user.phone}</a>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        "—"
+                      )}
                     </TableCell>
                     <TableCell>
                       <div className="text-sm text-slate-600">

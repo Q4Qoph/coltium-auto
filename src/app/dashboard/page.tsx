@@ -2,17 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Car, ClipboardList, FileText } from "lucide-react";
+import { ClipboardList, FileText } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui";
-import { useVehicles, useInspections, useMySubscription } from "@/lib/hooks";
+import { useInspections, useMySubscription } from "@/lib/hooks";
 import { formatDate } from "@/lib/utils";
 
 export default function DashboardPage() {
-  const {
-    data: vehicles = [],
-    isLoading: vehiclesLoading,
-    error: vehiclesError,
-  } = useVehicles();
   const {
     data: inspections = [],
     isLoading: inspectionsLoading,
@@ -24,9 +19,8 @@ export default function DashboardPage() {
     error: subscriptionError,
   } = useMySubscription();
 
-  const loading = vehiclesLoading || inspectionsLoading || subLoading;
-  const error = vehiclesError || inspectionsError || subscriptionError;
-  const vehicleList = Array.isArray(vehicles) ? vehicles : [];
+  const loading = inspectionsLoading || subLoading;
+  const error = inspectionsError || subscriptionError;
   const inspectionList = Array.isArray(inspections) ? inspections : [];
   const pending = inspectionList.filter(
     (x) => x.status === "pending" || x.status === "assigned"
@@ -62,7 +56,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <p className="text-zinc-400 mt-1">
-            Manage your vehicles and diagnostic inspections.
+            Request and track diagnostic inspections.
           </p>
         </div>
         <Image
@@ -80,21 +74,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-sky-50 to-white border-none shadow-sm">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-xs font-semibold tracking-wide text-sky-700 uppercase">
-              Vehicles
-            </CardTitle>
-            <Car className="h-4 w-4 text-sky-500" />
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold text-slate-900">{vehicleList.length}</p>
-            <Link href="/dashboard/vehicles" className="text-sm text-[var(--primary)] hover:underline">
-              Manage vehicles
-            </Link>
-          </CardContent>
-        </Card>
+      <div className="grid gap-4 md:grid-cols-2">
         <Card className="bg-gradient-to-br from-amber-50 to-white border-none shadow-sm">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-semibold tracking-wide text-amber-700 uppercase">
@@ -151,7 +131,10 @@ export default function DashboardPage() {
                   className="flex items-center justify-between py-2 border-b border-slate-200 last:border-0"
                 >
                   <span className="text-sm">
-                    {inv.vehicle?.make} {inv.vehicle?.model} — {formatDate(inv.requestedAt)}
+                    {inv.serviceType
+                      ? `${String(inv.serviceType).replace(/_/g, " ")} — `
+                      : ""}
+                    {formatDate(inv.requestedAt)}
                   </span>
                   <span
                     className={`text-xs px-2.5 py-1 rounded-full font-semibold tracking-wide uppercase ${
