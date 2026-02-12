@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
-  Car,
   ClipboardList,
   FileText,
   CreditCard,
@@ -16,7 +15,6 @@ import { cn } from "@/lib/utils";
 
 const nav = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/vehicles", label: "Vehicles", icon: Car },
   { href: "/dashboard/inspections", label: "Inspections", icon: ClipboardList },
   { href: "/dashboard/reports", label: "Reports", icon: FileText },
   { href: "/dashboard/payments", label: "Payments", icon: CreditCard },

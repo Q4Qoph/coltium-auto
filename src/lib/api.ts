@@ -91,7 +91,7 @@ export const inspectionsApi = {
   listMine: () => request<Inspection[]>("/inspections/mine"), // technician
   listAssigned: () => request<Inspection[]>("/inspections/assigned"), // technician
   get: (id: string) => request<Inspection>(`/inspections/${id}`),
-  create: (body: { vehicleId: string; scheduledAt?: string; notes?: string }) =>
+  create: (body: { serviceType: import("@/types").ServiceType; vehicleId?: string; scheduledAt?: string; notes?: string }) =>
     request<Inspection>("/inspections", { method: "POST", body: JSON.stringify(body) }),
   assign: (id: string, technicianId: string) =>
     request<Inspection>(`/inspections/${id}/assign`, {

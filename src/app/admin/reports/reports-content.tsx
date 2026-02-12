@@ -27,11 +27,11 @@ export default function ReportsContent() {
   const [severityFilter, setSeverityFilter] = useState<"" | "critical" | "monitor" | "informational">("");
 
   const filtered = reportList.filter((r) => {
+    const term = search.toLowerCase();
     const matchesSearch =
-      !search ||
-      r.summary?.toLowerCase().includes(search.toLowerCase()) ||
-      r.inspection?.vehicle?.make?.toLowerCase().includes(search.toLowerCase()) ||
-      r.inspection?.vehicle?.model?.toLowerCase().includes(search.toLowerCase());
+      !term ||
+      r.summary?.toLowerCase().includes(term) ||
+      (r.inspection?.notes?.toLowerCase().includes(term) ?? false);
     const matchesSeverity = !severityFilter || r.severityRanking === severityFilter;
     return matchesSearch && matchesSeverity;
   });
@@ -51,14 +51,14 @@ export default function ReportsContent() {
             <div>
               <CardTitle>All reports</CardTitle>
               <p className="text-sm text-slate-500 mt-1">
-                Search by vehicle or summary and filter by severity.
+                Search by summary or inspection notes; filter by severity.
               </p>
             </div>
             <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
               <div className="flex-1 space-y-1">
                 <Label className="text-xs uppercase tracking-wide text-slate-500">Search</Label>
                 <Input
-                  placeholder="Vehicle or summary..."
+                  placeholder="Summary or notes..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -97,7 +97,6 @@ export default function ReportsContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
-                  <TableHead>Vehicle</TableHead>
                   <TableHead>Severity</TableHead>
                   <TableHead>Summary</TableHead>
                 </TableRow>
@@ -105,7 +104,7 @@ export default function ReportsContent() {
               <TableBody>
                 {filtered.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center text-slate-500">
+                    <TableCell colSpan={3} className="text-center text-slate-500">
                       No reports match your filters
                     </TableCell>
                   </TableRow>
@@ -113,11 +112,6 @@ export default function ReportsContent() {
                   filtered.map((r) => (
                     <TableRow key={r.id}>
                       <TableCell>{formatDate(r.uploadedAt)}</TableCell>
-                      <TableCell>
-                        {r.inspection?.vehicle
-                          ? `${r.inspection.vehicle.make} ${r.inspection.vehicle.model}`
-                          : "—"}
-                      </TableCell>
                       <TableCell>
                         <Badge
                           variant={
