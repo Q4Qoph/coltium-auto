@@ -3,8 +3,8 @@
  */
 export const CONTACT = {
   address: "15164-00509, Langata Hardy, Nairobi",
-  email: "contact@intl-coltium.com",
-  website: "https://www.intl-coltium.com",
+  email: "sales@coltiumauto.shop",
+  website: "https://coltiumauto.shop",
   phone: "+254 762 858881",
   /** E.164 for tel: and wa.me (no + or spaces) */
   phoneE164: "254762858881",
