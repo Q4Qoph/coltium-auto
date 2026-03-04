@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUp, Instagram, Twitter, Facebook, Send } from 'lucide-react';
+import { ArrowUp, Send } from 'lucide-react';
+import { FaInstagram, FaFacebook, FaXTwitter, FaTiktok, FaYoutube } from 'react-icons/fa6';
 import Image from 'next/image';
 import { CONTACT, mailtoUrl, telUrl } from '@/lib/contact';
 
@@ -64,19 +65,21 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="flex justify-end mb-16">
           <div className="flex space-x-4">
-            <Link href="https://www.instagram.com/coltium_auto" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
-              <Instagram size={20} />
+            <Link href="https://www.instagram.com/coltiumauto/" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+              <FaInstagram size={20} />
             </Link>
-            <Link href="https://twitter.com" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
-              <Twitter size={20} />
+            <Link href="https://x.com/CAuto58801" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+              <FaXTwitter size={20} />
             </Link>
-            <Link href="https://facebook.com" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
-              <Facebook size={20} />
+            <Link href="https://www.facebook.com/profile.php?id=61586599855233" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+              <FaFacebook size={20} />
             </Link>
-            <Link href="/contact" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
-              <Send size={20} />
+            <Link href="https://www.tiktok.com/@coltiumauto" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+              <FaTiktok size={20} />
             </Link>
-
+            <Link href="https://www.youtube.com/@Coltiumauto" className="p-2 border border-white rounded-full hover:bg-white hover:text-black transition duration-300">
+              <FaYoutube size={20} />
+            </Link>
           </div>
         </div>
 
