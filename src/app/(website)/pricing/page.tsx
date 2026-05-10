@@ -61,7 +61,7 @@ export default function PricingPage() {
   if (isLoading) {
     return (
       <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
-        <div className="pt-32 pb-20 container mx-auto px-6">
+        <div className="pt-12 pb-20 container mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Left label skeleton */}
             <div className="md:w-1/5">
@@ -161,7 +161,7 @@ export default function PricingPage() {
 
   return (
     <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
-      <div className="pt-32 pb-20 container mx-auto px-6">
+      <div className="pt-12 pb-20 container mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left label column aligned with logo */}
           <div className="md:w-1/5">

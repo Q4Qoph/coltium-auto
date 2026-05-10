@@ -17,6 +17,8 @@ const WebsiteShell = ({
   return (
     <div className={theme === "dark" ? "bg-black text-white" : "bg-white text-slate-900"}>
       <Navbar />
+      {/* Fills layout below `position:fixed` header so page content is not covered */}
+      <div aria-hidden className="shrink-0 w-full" style={{ height: "var(--website-header-spacer)" }} />
       {children}
       <Footer />
 

@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <section className={theme === "dark" ? "min-h-screen bg-black text-white" : "min-h-screen bg-white text-slate-900"}>
       <div className={theme === "dark" ? "bg-gradient-to-b from-zinc-900 to-black pb-24" : "pb-24"}>
-        <div className="pt-32 px-6 container mx-auto">
+        <div className="pt-12 px-6 container mx-auto">
           {/* Header Section */}
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/5">

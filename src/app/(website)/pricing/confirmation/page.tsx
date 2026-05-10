@@ -8,7 +8,7 @@ export default function PricingConfirmationPage() {
 
   return (
     <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
-      <div className="pt-32 pb-20 container mx-auto px-6 flex flex-col items-center text-center max-w-2xl">
+      <div className="pt-12 pb-20 container mx-auto px-6 flex flex-col items-center text-center max-w-2xl">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">
           Thank you for subscribing
         </h1>
