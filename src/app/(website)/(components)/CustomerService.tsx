@@ -72,7 +72,7 @@ const CustomerService = ({ goToWhatsapp }: any) => {
             </ul>
             <button
               onClick={goToWhatsapp}
-              className="bg-[var(--primary)] transition-colors px-6 py-3 rounded-full self-start flex items-center gap-2"
+              className="flex items-center gap-2 self-start rounded-full bg-[var(--primary)] px-6 py-3 text-white transition-colors hover:bg-[var(--primary-hover)]"
             >
               Book on-site diagnostics
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -39,8 +39,8 @@ export default function Home() {
 
     return (
         <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
-            {/* Hero Section */}
-            <section className="relative h-[60vh] sm:h-screen flex items-center pt-24 md:pt-28 text-white">
+            {/* Hero Section — min-height avoids overflow overlap with next section; start-aligned on small screens */}
+            <section className="relative min-h-[60vh] sm:min-h-screen flex items-start md:items-center pt-6 sm:pt-10 pb-16 sm:pb-12 text-white">
                 <div className="absolute inset-0 overflow-hidden">
                     <Image
                         src="/1.png"
@@ -77,7 +77,7 @@ export default function Home() {
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <button
                                 onClick={() => router.push('/login')}
-                                className="bg-[var(--primary)] transition-colors px-8 py-3 rounded-full flex items-center gap-2"
+                                className="flex items-center gap-2 rounded-full bg-[var(--primary)] px-8 py-3 text-white transition-colors hover:bg-[var(--primary-hover)]"
                             >
                                 Book a diagnostic
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

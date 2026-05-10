@@ -133,7 +133,7 @@ const FaqPage = () => {
   return (
     <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       {/* Hero Section */}
-      <section className={isDark ? "pt-32 pb-20 px-6 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 pb-20 px-6 bg-slate-100"}>
+      <section className={isDark ? "pt-12 pb-20 px-6 bg-gradient-to-b from-zinc-900 to-black" : "pt-12 pb-20 px-6 bg-slate-100"}>
         <div className="container mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
@@ -284,7 +284,7 @@ const FaqPage = () => {
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href={telUrl}
-                className="inline-flex items-center justify-center bg-[var(--primary)] rounded-lg px-6 py-3 font-medium hover:bg-opacity-90 transition duration-300"
+                className="inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-6 py-3 font-medium text-white transition duration-300 hover:bg-[var(--primary-hover)]"
               >
                 Call Us
               </a>

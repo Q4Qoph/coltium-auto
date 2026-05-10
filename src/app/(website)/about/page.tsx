@@ -9,7 +9,7 @@ export default function AboutPage() {
 
   return (
     <div className={theme === "dark" ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
-      <div className="pt-32 pb-20 px-6 container mx-auto">
+      <div className="pt-12 pb-20 px-6 container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/5">
             <div className="flex items-center mb-8">
