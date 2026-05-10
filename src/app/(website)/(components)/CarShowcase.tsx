@@ -57,7 +57,7 @@ const CarShowcase = () => {
             <p className="text-gray-400 max-w-md">
               See how we turn ordinary cars into rolling art with premium wraps.
             </p>
-            <button className="bg-[var(--primary)] transition-colors px-6 py-2 rounded-full text-sm">
+            <button type="button" className="rounded-full bg-[var(--primary)] px-6 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-hover)]">
               See all cars
             </button>
           </div>
@@ -142,7 +142,7 @@ const CarShowcase = () => {
                 </div>
               </div>
 
-              <button className="mt-8 md:mt-0 bg-[var(--primary)] transition-colors px-6 py-2 rounded-full text-sm flex items-center gap-2">
+              <button type="button" className="mt-8 flex items-center gap-2 rounded-full bg-[var(--primary)] px-6 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-hover)] md:mt-0">
                 Book a Wrap
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  /* Reserves space equivalent to the fixed website Navbar (safe-area + bar height) */
+  /* Matches Navbar: top inset + logo row (~2.25rem) + bottom padding (0.75rem) */
+  --website-header-spacer: calc(3rem + max(0.75rem, env(safe-area-inset-top, 0px)));
+
   /* Light surface background */
   --background: #f9fafb; /* near-white */
   --foreground: #020617; /* slate-950 for main text */

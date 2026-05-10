@@ -130,7 +130,7 @@ const ServicesPage = () => {
   return (
     <div className={isDark ? "bg-black text-white min-h-screen" : "bg-white text-slate-900 min-h-screen"}>
       {/* Hero Section */}
-      <section className={isDark ? "pt-32 pb-12 bg-gradient-to-b from-zinc-900 to-black" : "pt-32 pb-10 bg-slate-100"}>
+      <section className={isDark ? "pt-12 pb-12 bg-gradient-to-b from-zinc-900 to-black" : "pt-12 pb-10 bg-slate-100"}>
         <div className="container mx-auto px-6">
           <motion.div
             initial="hidden"
@@ -385,7 +385,7 @@ const ServicesPage = () => {
             </motion.div>
             <Link
               href={telUrl}
-              className="inline-flex shrink-0 items-center justify-center bg-[var(--primary)] text-white rounded-full px-8 py-3.5 font-medium hover:opacity-90 transition-opacity"
+              className="inline-flex shrink-0 items-center justify-center rounded-full bg-[var(--primary)] px-8 py-3.5 font-medium text-white transition-opacity hover:opacity-90"
             >
               Call to book
             </Link>
