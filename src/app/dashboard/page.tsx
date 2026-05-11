@@ -30,10 +30,10 @@ export default function DashboardPage() {
   if (loading && !error) {
     return (
       <div className="space-y-8">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
-            <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
+            <div className="mt-2 h-4 w-full max-w-64 rounded-md bg-slate-100 animate-pulse" />
           </div>
           <div className="h-8 w-32 rounded-md bg-slate-200 animate-pulse" />
         </div>
@@ -52,7 +52,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <p className="text-zinc-400 mt-1">
@@ -128,7 +128,7 @@ export default function DashboardPage() {
               {recent.map((inv) => (
                 <li
                   key={inv.id}
-                  className="flex items-center justify-between py-2 border-b border-slate-200 last:border-0"
+                  className="flex flex-col gap-2 py-2 border-b border-slate-200 last:border-0 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <span className="text-sm">
                     {inv.serviceType
