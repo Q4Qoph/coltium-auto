@@ -101,10 +101,10 @@ export default function InspectionsPage() {
   if (loading && !inspectionsError) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
-            <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
+            <div className="mt-2 h-4 w-full max-w-64 rounded-md bg-slate-100 animate-pulse" />
           </div>
           <div className="h-9 w-32 rounded-md bg-slate-200 animate-pulse" />
         </div>
@@ -130,14 +130,14 @@ export default function InspectionsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Inspections</h1>
           <p className="text-zinc-400 mt-1">
             Request a diagnostic service. Select the service type; we’ll confirm location and vehicle details with you.
           </p>
         </div>
-        <Button onClick={() => setModalOpen(true)}>Request inspection</Button>
+        <Button className="w-full sm:w-auto" onClick={() => setModalOpen(true)}>Request inspection</Button>
       </div>
 
       {inspectionsError && (
@@ -188,8 +188,8 @@ export default function InspectionsPage() {
           ) : (
             <ul className="divide-y divide-slate-200">
               {filtered.map((inv) => (
-                <li key={inv.id} className="py-4 flex items-center justify-between">
-                  <div>
+                <li key={inv.id} className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
                     <p className="font-medium">
                       {serviceTypeLabel(inv.serviceType)}
                     </p>
@@ -198,7 +198,7 @@ export default function InspectionsPage() {
                       {inv.scheduledAt && ` · Scheduled ${formatDate(inv.scheduledAt)}`}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <Badge variant={statusVariant(inv.status)}>
                       {inspectionStatusLabel(inv.status)}
                     </Badge>
@@ -275,11 +275,11 @@ export default function InspectionsPage() {
                   placeholder="e.g. Check engine light on, or any other details"
                 />
               </div>
-              <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="outline" onClick={closeModal}>
+              <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end">
+                <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={closeModal}>
                   Cancel
                 </Button>
-                <Button type="submit" loading={createInspection.isPending}>
+                <Button type="submit" className="w-full sm:w-auto" loading={createInspection.isPending}>
                   Request inspection
                 </Button>
               </div>
@@ -288,7 +288,7 @@ export default function InspectionsPage() {
 
           {!form.serviceType && (
             <div className="flex justify-end">
-              <Button type="button" variant="outline" onClick={closeModal}>
+              <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={closeModal}>
                 Cancel
               </Button>
             </div>

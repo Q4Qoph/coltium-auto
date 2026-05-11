@@ -86,10 +86,10 @@ export default function VehiclesPage() {
     // Skeleton state while loading vehicles
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="h-6 w-40 rounded-md bg-slate-200 animate-pulse" />
-            <div className="mt-2 h-4 w-64 rounded-md bg-slate-100 animate-pulse" />
+            <div className="mt-2 h-4 w-full max-w-64 rounded-md bg-slate-100 animate-pulse" />
           </div>
           <div className="h-9 w-28 rounded-md bg-slate-200 animate-pulse" />
         </div>
@@ -117,12 +117,12 @@ export default function VehiclesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Vehicles</h1>
           <p className="text-slate-500 mt-1">Add and manage vehicles for diagnostic inspections.</p>
         </div>
-        <Button onClick={() => setModalOpen(true)}>Add vehicle</Button>
+        <Button className="w-full sm:w-auto" onClick={() => setModalOpen(true)}>Add vehicle</Button>
       </div>
 
       <Card>
@@ -198,7 +198,7 @@ export default function VehiclesPage() {
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Add vehicle">
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && <p className="text-sm text-red-500">{error}</p>}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Make</Label>
               <Input
@@ -245,7 +245,7 @@ export default function VehiclesPage() {
               placeholder="e.g. KCA 123A"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label>Mileage (optional)</Label>
               <Input
@@ -268,11 +268,11 @@ export default function VehiclesPage() {
               </select>
             </div>
           </div>
-          <div className="flex justify-end gap-2 pt-4">
-            <Button type="button" variant="outline" onClick={() => setModalOpen(false)}>
+          <div className="flex flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-end">
+            <Button type="button" variant="outline" className="w-full sm:w-auto" onClick={() => setModalOpen(false)}>
               Cancel
             </Button>
-            <Button type="submit" loading={createVehicle.isPending}>Add vehicle</Button>
+            <Button type="submit" className="w-full sm:w-auto" loading={createVehicle.isPending}>Add vehicle</Button>
           </div>
         </form>
       </Modal>
