@@ -133,8 +133,8 @@ export default function ReportsPage() {
         <div className="lg:col-span-2">
           {selected ? (
             <Card>
-              <CardHeader className="flex flex-row items-start justify-between">
-                <div>
+              <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0">
                   <CardTitle>Report — {formatDate(selected.uploadedAt)}</CardTitle>
                   {selected.inspection?.vehicle && (
                     <CardDescription>
@@ -145,7 +145,7 @@ export default function ReportsPage() {
                 </div>
                 {selected.fileUrl && (
                   <a href={selected.fileUrl} target="_blank" rel="noopener noreferrer">
-                    <Button variant="outline" size="sm">Download PDF</Button>
+                    <Button variant="outline" size="sm" className="w-full sm:w-auto">Download PDF</Button>
                   </a>
                 )}
               </CardHeader>
@@ -167,7 +167,7 @@ export default function ReportsPage() {
                     <h4 className="text-sm font-medium text-zinc-400 mb-2">Findings</h4>
                     <ul className="space-y-2">
                       {selected.findings.map((f) => (
-                        <li key={f.id} className="text-sm flex gap-2">
+                        <li key={f.id} className="flex flex-wrap gap-2 text-sm">
                           <Badge variant={severityVariant(f.severity)} className="shrink-0">
                             {f.severity}
                           </Badge>

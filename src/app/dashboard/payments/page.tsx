@@ -65,8 +65,8 @@ export default function DashboardPaymentsPage() {
           ) : (
             <ul className="divide-y divide-slate-200">
               {payments.map((p) => (
-                <li key={p.id} className="py-4 flex flex-wrap items-center justify-between gap-2">
-                  <div>
+                <li key={p.id} className="flex flex-col gap-2 py-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="min-w-0">
                     <p className="font-medium">
                       KES {Number(p.amount).toLocaleString()}
                       {p.subscription?.plan && (
