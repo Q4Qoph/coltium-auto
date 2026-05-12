@@ -16,6 +16,7 @@ import type {
   LoginRequest,
   SignupRequest,
   ApiError,
+  ContactMessage,
 } from "@/types";
 
 const getBaseUrl = () => process.env.NEXT_PUBLIC_API_URL ?? "";
@@ -183,4 +184,24 @@ export const adminPlansApi = {
     request<SubscriptionPlan>("/admin/plans", { method: "POST", body: JSON.stringify(body) }),
   update: (id: string, body: Partial<AdminPlanPayload>) =>
     request<SubscriptionPlan>(`/admin/plans/${id}`, { method: "PATCH", body: JSON.stringify(body) }),
+};
+
+export type ContactMessageSubmit = {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+};
+
+/** Public: no login required */
+export const contactMessagesApi = {
+  submit: (body: ContactMessageSubmit) =>
+    request<{ ok: boolean; id: string }>("/contact-messages", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+};
+
+export const adminContactMessagesApi = {
+  list: () => request<ContactMessage[]>("/admin/contact-messages"),
 };

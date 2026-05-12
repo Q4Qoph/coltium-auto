@@ -185,3 +185,13 @@ export interface ApiError {
   code?: string;
   status?: number;
 }
+
+/** Public website contact form submission (stored for admin review) */
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+  createdAt: string;
+}

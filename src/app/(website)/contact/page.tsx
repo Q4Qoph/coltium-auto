@@ -4,6 +4,7 @@ import React from 'react';
 import { Mail, Phone, Clock, MapPin, Globe } from 'lucide-react';
 import { CONTACT, mailtoUrl, telUrl } from '@/lib/contact';
 import { useWebsiteTheme } from '@/lib/website-theme';
+import ContactForm from '@/app/(website)/(components)/ContactForm';
 
 export default function ContactPage() {
   const { theme } = useWebsiteTheme();
@@ -113,6 +114,12 @@ export default function ContactPage() {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div
+                className={`mt-12 pt-10 border-t ${theme === "dark" ? "border-zinc-800" : "border-slate-200"}`}
+              >
+                <ContactForm />
               </div>
             </div>
           </div>
