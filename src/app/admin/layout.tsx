@@ -12,6 +12,7 @@ import {
   CreditCard,
   Repeat,
   Package,
+  Mail,
   LogOut,
   Menu,
   X,
@@ -28,6 +29,7 @@ const nav = [
   { href: "/admin/payments", label: "Payments", icon: CreditCard },
   { href: "/admin/inspections", label: "Inspections", icon: ClipboardList },
   { href: "/admin/reports", label: "Reports", icon: FileText },
+  { href: "/admin/contact-messages", label: "Contact", icon: Mail },
 ];
 
 export default function AdminLayout({

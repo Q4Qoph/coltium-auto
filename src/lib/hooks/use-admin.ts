@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { usersApi, techniciansApi, adminPlansApi } from "@/lib/api";
+import { usersApi, techniciansApi, adminPlansApi, adminContactMessagesApi } from "@/lib/api";
 import { subscriptionKeys } from "./use-subscriptions";
 
 export const userKeys = {
@@ -17,6 +17,11 @@ export const technicianKeys = {
 export const adminPlanKeys = {
   all: ["admin", "plans"] as const,
   list: () => [...adminPlanKeys.all, "list"] as const,
+};
+
+export const adminContactMessageKeys = {
+  all: ["admin", "contact-messages"] as const,
+  list: () => [...adminContactMessageKeys.all, "list"] as const,
 };
 
 export function useUsers(params?: { page?: number; limit?: number; role?: string }) {
@@ -72,5 +77,12 @@ export function useUpdatePlan() {
       queryClient.invalidateQueries({ queryKey: adminPlanKeys.all });
       queryClient.invalidateQueries({ queryKey: subscriptionKeys.plans() });
     },
+  });
+}
+
+export function useAdminContactMessages() {
+  return useQuery({
+    queryKey: adminContactMessageKeys.list(),
+    queryFn: () => adminContactMessagesApi.list(),
   });
 }
